@@ -6,5 +6,8 @@ export default defineConfig({
   server:{
     port: 5671
   },
+  build:{
+    outDir: 'app'
+  },
   base: './'
 })

@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const { join } = require('path');
 
-const isDev = process.env.npm_lifecycle_event === "app:dev" ? true : false;
+const isDev = process.env.APP_DEV ? (process.env.APP_DEV.trim() == "true") : false;
 
 // Create application window
 function createWindow() {
@@ -23,7 +23,7 @@ function createWindow() {
     });
 
     // Loading the main page
-    mainWindow.loadURL(isDev ? 'http://localhost:5671' : join(__dirname, '../index.html'));
+    mainWindow.loadURL(isDev ? 'http://localhost:5671' : 'file://'+join(__dirname, '/app/index.html'));
 
     // Open debug tool
     if (isDev) mainWindow.webContents.openDevTools();
