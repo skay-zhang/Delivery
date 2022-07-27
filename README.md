@@ -2,13 +2,13 @@
 
 ## 🗂 File Structure
 
-* /page: User interface folder
-* /public: Static resources folder
-* app.js
-* index.html
-* package.json
-* preload.js
-* vite.config.js
+* /page ··············> User interface folder
+* /public ············> Static resources folder
+* app.js ·············> Electron portal file
+* index.html ······> Vite portal file
+* package.json ·> Project config file
+* preload.js ·······> Electron preload file
+* vite.config.js ··> Vite config file
 
 ## 🛠 Route
 
