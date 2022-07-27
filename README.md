@@ -1,5 +1,15 @@
 # Delivery
 
+## 🗂 File Structure
+
+* /page: User interface folder
+* /public: Static resources folder
+* app.js
+* index.html
+* package.json
+* preload.js
+* vite.config.js
+
 ## 🛠 Route
 
 * [ ] Basic UI: Includes only transfer-related screens
