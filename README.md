@@ -1,5 +1,24 @@
 # Delivery
 
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+![Version](https://img.shields.io/badge/dev-0.0.1-red.svg)
+[![Node](https://img.shields.io/badge/node-%E2%89%A516.16.0-blue.svg)](https://nodejs.org/)
+
+## How to start development
+
+```shell
+# Check node version (should be ≥ 16.16.0)
+node --version
+# Clone code
+git clone https://github.com/skay-zhang/Delivery.git ./Delivery
+# Enter directory
+cd Delivery
+# Install dependency
+yarn install
+# Run project
+yarn run app:dev
+```
+
 ## 🗂 File Structure
 
 * /page ··············> User interface folder
@@ -37,3 +56,7 @@ Thanks to the following projects that make Delivery possible.
 * [Vite](https://github.com/vitejs/vite)
 * [Vue](https://github.com/vuejs/vue)
 * [Electron Builder](https://github.com/electron-userland/electron-builder)
+
+## License
+
+[MIT](LICENSE)
