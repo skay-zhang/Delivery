@@ -1,13 +1,11 @@
-// import { app, BrowserWindow } from 'electron';
-// import { join } from 'path';
 const { app, BrowserWindow } = require('electron');
 const { join } = require('path');
 
 const isDev = process.env.npm_lifecycle_event === "app:dev" ? true : false;
 
-// 创建应用窗口
+// Create application window
 function createWindow() {
-    // 创建窗口
+    // Create window
     const mainWindow = new BrowserWindow({
         width: 400,
         height: 800,
@@ -24,23 +22,23 @@ function createWindow() {
         },
     });
 
-    // 加载主页面
+    // Loading the main page
     mainWindow.loadURL(isDev ? 'http://localhost:5671' : join(__dirname, '../index.html'));
 
-    // 开启调试工具
+    // Open debug tool
     if (isDev) mainWindow.webContents.openDevTools();
 }
 
-// 应用就绪
+// Application Ready
 app.whenReady().then(() => {
     createWindow()
     app.on('activate', function () {
-        // 无可见窗口时创建新窗口
+        // Create new window when no window is activate
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 });
 
-// 退出应用
+// Exit the application
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
