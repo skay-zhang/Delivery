@@ -16,7 +16,6 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
-release
 .vscode
 .DS_Store
 *.suo
@@ -24,3 +23,5 @@ release
 *.njsproj
 *.sln
 *.sw?
+
+release
