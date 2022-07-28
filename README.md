@@ -56,6 +56,7 @@ Thanks to the following projects that make Delivery possible.
 * [Vite](https://github.com/vitejs/vite)
 * [Vue](https://github.com/vuejs/vue)
 * [Electron Builder](https://github.com/electron-userland/electron-builder)
+* [Element Plus](https://github.com/element-plus/element-plus)
 
 ## License
 
