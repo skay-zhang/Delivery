@@ -10,9 +10,11 @@
     "vite:dev": "vite",
     "vite:build": "vite build",
     "vite:preview": "vite preview",
-    "app:dev": "concurrently -n vite,electron vite \"set APP_DEV=true && electron .\"",
-    "app:build": "yarn run vite:build && electron-builder",
-    "app:preview": "yarn run vite:build && set APP_DEV=true && electron ."
+    "app:dev:win": "concurrently -n vite,electron vite \"set APP_DEV=true && electron .\"",
+    "app:dev:mac": "concurrently -n vite,electron vite \"APP_DEV=true electron .\"",
+    "app:preview:win": "yarn run vite:build && set APP_DEV=true && electron .",
+    "app:preview:mac": "yarn run vite:build && APP_DEV=true electron .",
+    "app:build": "yarn run vite:build && electron-builder"
   },
   "build": {
     "productName": "Delivery",

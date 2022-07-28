@@ -15,8 +15,8 @@ git clone https://github.com/skay-zhang/Delivery.git ./Delivery
 cd Delivery
 # Install dependency
 yarn install
-# Run project
-yarn run app:dev
+# Run project (app:dev:mac or app:dev:win)
+yarn run app:dev:mac
 ```
 
 ## 🗂 File Structure
