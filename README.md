@@ -23,10 +23,9 @@ yarn run app:dev:mac
 
 * /page ··············> User interface folder
 * /public ············> Static resources folder
-* app.js ·············> Electron portal file
+* /basic ·············> Electron portal
 * index.html ······> Vite portal file
 * package.json ·> Project config file
-* preload.js ·······> Electron preload file
 * vite.config.js ··> Vite config file
 
 ## 🛠 Route
@@ -45,7 +44,7 @@ yarn run app:dev:mac
 
 * Electron >= 19.0.9
 * NodeJS >= 16.16.0
-* Vite > 3.0.0
+* Vite == 2.9.13
 * Vue >= 3.2.37
 
 ## 😊 Thanks

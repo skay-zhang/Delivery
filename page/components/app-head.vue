@@ -1,10 +1,6 @@
-<script setup>
-import { Close, Minus } from '@element-plus/icons-vue'
-</script>
-
 <template>
   <div id="app-head">
-    <div id="head-bar" class="windows">
+    <div id="head-bar" :class="system">
       <div class="minimize left">
         <el-icon>
           <Minus />
@@ -24,6 +20,30 @@ import { Close, Minus } from '@element-plus/icons-vue'
     <div class="title full-width">Delivery</div>
   </div>
 </template>
+
+<script>
+import { Close, Minus } from '@element-plus/icons-vue'
+
+export default {
+  name: "appHead",
+  components: { Close, Minus },
+  props:{
+    system:{
+      type: String,
+      default: 'other'
+    }
+  },
+  data() {
+    
+  },
+  methods: {
+
+  },
+  mounted() {
+    
+  }
+};
+</script>
 
 <style scoped>
 #app-head {
