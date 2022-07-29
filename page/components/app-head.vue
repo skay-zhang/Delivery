@@ -17,7 +17,7 @@
         </el-icon>
       </div>
     </div>
-    <div class="title full-width">Delivery</div>
+    <div class="title full-width text-center">Delivery</div>
   </div>
 </template>
 
@@ -27,36 +27,37 @@ import { Close, Minus } from '@element-plus/icons-vue'
 export default {
   name: "appHead",
   components: { Close, Minus },
-  props:{
-    system:{
+  props: {
+    system: {
       type: String,
       default: 'other'
     }
   },
   data() {
-    
+
   },
   methods: {
 
   },
   mounted() {
-    
+
   }
 };
 </script>
 
 <style scoped>
 #app-head {
+  background-color: var(--app-head-color);
+  color: var(--app-head-text-color);
   border-radius: 8px 8px 0 0;
-  background-color: #333333;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -webkit-app-region: drag;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
   user-select: none;
   font-size: 12px;
-  color: #999;
   display: flex;
   height: 30px;
   width: 100%;
@@ -76,20 +77,16 @@ export default {
   right: 0;
 }
 
-#head-bar * {
-  cursor: pointer;
-}
-
 /* Windows */
 #head-bar.windows .minimize,
 #head-bar.windows .close {
   -webkit-app-region: no-drag;
+  color: var(--app-text-color);
   justify-content: center;
   align-items: center;
   line-height: 12px;
-  font-weight: bold;
-  color: #f4f4f4;
   font-size: 16px;
+  cursor: pointer;
   display: flex;
   height: 30px;
   width: 30px;
@@ -110,10 +107,12 @@ export default {
 #head-bar.windows .close:hover {
   border-radius: 0 8px 0 0;
   background-color: rgba(255, 0, 0, 0.8);
+  color: #f4f4f4;
 }
 
 #head-bar.windows .close:active {
   background-color: rgba(255, 0, 0, 0.5);
+  color: #f4f4f4;
 }
 
 #head-bar.macos {
@@ -132,6 +131,7 @@ export default {
   line-height: 12px;
   font-weight: bold;
   font-size: 12px;
+  cursor: pointer;
   display: flex;
   height: 13px;
   width: 13px;
@@ -167,5 +167,15 @@ export default {
 
 #head-bar.macos .close:active {
   background-color: rgb(252, 104, 99);
+}
+
+@media (prefers-color-scheme: light) {
+  #head-bar.windows .minimize:hover {
+    background-color: rgba(113, 113, 113, 0.1);
+  }
+
+  #head-bar.windows .minimize:active {
+    background-color: rgba(113, 113, 113, 0.3);
+  }
 }
 </style>

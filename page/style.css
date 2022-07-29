@@ -1,101 +1,59 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
+  font-family: Ubuntu, "Helvetica Neue", Helvetica, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: normal;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-#app{
-  background-color: #242424;
-  border-radius: 0 0 8px 8px;
-  text-align: center;
-  height: 800px;
-  width: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.card {
-  padding: 2em;
+  --app-background-color: #242424;
+  --app-text-color: #f4f4f4;
+  --app-head-color: #333333;
+  --app-head-text-color: #999999;
+  --app-head-border-color: #4e5052;
+  --app-content-color: #232325;
+  --app-menu-color: #333333;
+  --app-menu-active-color: #2a2a2d;
+  --app-menu-hover-color: #343437;
+  --app-menu-active-border-color: #114eb0;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    --app-background-color: #ffffff;
+    --app-text-color: #213547;
+    --app-head-color: #f4f4f4;
+    --app-head-text-color: #333333;
+    --app-head-border-color: #c4c6c7;
+    --app-content-color: #ffffff;
+    --app-menu-color: #eff1f2;
+    --app-menu-active-color: #d9dde2;
+    --app-menu-hover-color: #e6e9ed;
+    --app-menu-active-border-color: #1968e5;
   }
 }
 
 
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  place-items: center;
+  user-select: none;
+  display: flex;
+  margin: 0;
+}
 
-
-
-
-
-
+#app {
+  background-color: var(--app-background-color);
+  color: var(--app-text-color);
+  border-radius: 0 0 8px 8px;
+  height: 800px;
+  width: 100%;
+}
 
 .no-select {
   -webkit-touch-callout: none;
@@ -103,6 +61,56 @@ button:focus-visible {
   user-select: none;
 }
 
-.full-width{
+.full-width {
   width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.text-small {
+  font-size: 12px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-gray {
+  color: #999;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.dot-red {
+  background-color: #c45656;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+}
+
+.dot-green {
+  background-color: #529b2e;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
 }

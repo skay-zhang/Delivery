@@ -1,12 +1,16 @@
 <template>
   <app-head :system="system" />
   <el-config-provider :locale="locale">
-    <div style="padding: 20px">Hello World</div>
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
   </el-config-provider>
 </template>
 
 <script>
-import { sys } from './plugin/util';
+import { sys } from './plugins/util';
 import AppHead from './components/app-head.vue';
 import zhCn from 'element-plus/lib/locale/lang/zh-cn';
 

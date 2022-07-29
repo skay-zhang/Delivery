@@ -7,16 +7,14 @@
 ## How to start development
 
 ```shell
-# Check node version (should be ≥ 16.16.0)
-node --version
 # Clone code
 git clone https://github.com/skay-zhang/Delivery.git ./Delivery
 # Enter directory
 cd Delivery
 # Install dependency
 yarn install
-# Run project (app:dev:mac or app:dev:win)
-yarn run app:dev:mac
+# Run project
+yarn run app:dev
 ```
 
 ## 🗂 File Structure
