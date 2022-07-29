@@ -32,15 +32,6 @@ export default {
       type: String,
       default: 'other'
     }
-  },
-  data() {
-
-  },
-  methods: {
-
-  },
-  mounted() {
-
   }
 };
 </script>

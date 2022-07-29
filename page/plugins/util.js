@@ -1,4 +1,14 @@
+import { ipcRenderer } from 'electron'
 import os from 'os';
+
+export const win = {
+    fold(){
+        ipcRenderer.send('win-fold');
+    },
+    open(){
+        ipcRenderer.send('win-open');
+    }
+}
 
 export const sys = {
     getType() {

@@ -25,8 +25,8 @@ const indexHtml = join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    width: 400,
-    height: 800,
+    width: 350,
+    height: 700,
     frame: false,
     center: true,
     resizable: false,
@@ -84,6 +84,14 @@ app.on('activate', () => {
   } else {
     createWindow()
   }
+})
+
+ipcMain.on('win-fold', (event, arg)=>{
+  win.setSize(350,103);
+})
+
+ipcMain.on('win-open', (event, arg)=>{
+  win.setSize(350,700);
 })
 
 // new window example arg: new windows url

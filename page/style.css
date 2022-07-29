@@ -10,6 +10,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
   --app-background-color: #242424;
   --app-text-color: #f4f4f4;
   --app-head-color: #333333;
@@ -18,8 +19,9 @@
   --app-content-color: #232325;
   --app-menu-color: #333333;
   --app-menu-active-color: #2a2a2d;
-  --app-menu-hover-color: #343437;
-  --app-menu-active-border-color: #114eb0;
+  --app-menu-hover-color: #3d3d3d;
+  --app-menu-active-border-color: #235db9;
+  --app-topbar-btn-hover-color: #494949;
 }
 
 @media (prefers-color-scheme: light) {
@@ -34,6 +36,8 @@
     --app-menu-active-color: #d9dde2;
     --app-menu-hover-color: #e6e9ed;
     --app-menu-active-border-color: #1968e5;
+    --app-topbar-btn-hover-color: #e6e9ed;
+    --app-topbar-btn-active-color: #d9dde2;
   }
 }
 
@@ -51,7 +55,6 @@ body {
   background-color: var(--app-background-color);
   color: var(--app-text-color);
   border-radius: 0 0 8px 8px;
-  height: 800px;
   width: 100%;
 }
 
@@ -113,4 +116,52 @@ body {
   border-radius: 50%;
   height: 8px;
   width: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.el-tabs__header{
+  background-color: var(--app-menu-color);
+}
+
+.el-tabs__item{
+  background-color: var(--app-menu-color);
+  border-right: 2px solid var(--app-head-border-color);
+  color: #999999 !important;
+}
+
+.el-tabs__item:hover{
+  background-color: var(--app-menu-hover-color);
+}
+
+.el-tabs__item:active{
+  background-color: var(--app-menu-active-color);
+}
+
+.el-tabs__item.is-active{
+  background-color: var(--app-menu-active-color);
+  color: var(--app-text-color) !important;
+}
+
+.el-tabs__active-bar{
+  background-color: var(--app-menu-active-border-color) !important;
+}
+
+.el-tabs__nav-wrap::after{
+  background-color: var(--app-head-border-color) !important;
+}
+
+@media (prefers-color-scheme: light) {
+  .el-tabs__item{
+    color: #999999 !important;
+  }
 }

@@ -1,5 +1,6 @@
 <template>
   <app-head :system="system" />
+  <top-bar />
   <el-config-provider :locale="locale">
     <router-view v-slot="{ Component }">
       <keep-alive>
@@ -12,11 +13,12 @@
 <script>
 import { sys } from './plugins/util';
 import AppHead from './components/app-head.vue';
+import TopBar from './components/top-bar.vue';
 import zhCn from 'element-plus/lib/locale/lang/zh-cn';
 
 export default {
   name: "appMenu",
-  components: { AppHead },
+  components: { AppHead,TopBar },
   data() {
     return {
       locale: zhCn,
