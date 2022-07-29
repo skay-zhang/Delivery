@@ -30,26 +30,31 @@
 <script>
 import { ArrowLeftBold } from '@element-plus/icons-vue'
 import { win } from '../plugins/util';
+import { config } from '../../basic/config';
 
 export default {
   name: 'setting',
   components: { ArrowLeftBold },
   data() {
     return {
-      active: 'service'
+      active: 'service',
+      conf: {}
     }
   },
   methods: {
     init() {
       let tab = this.$route.query.tab;
-      if (tab) this.active = tab;
-      win.open();
+      if (tab) {
+        this.active = tab;
+        this.conf = config.getModule(tab);
+      }
     },
     back() {
       this.$router.push('/home');
     }
   },
   mounted() {
+    win.open();
     this.init();
   },
   watch: {
