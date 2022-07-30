@@ -17,26 +17,10 @@
   </div>
   <div class="content" v-if="!fold">
     <div v-show="show">
-      <template v-if="select === 'share'">
-        <div class="tips flex align-center justify-center full-width">
-          <div class="text-center">
-            <el-icon class="tips-icon">
-              <RemoveFilled />
-            </el-icon>
-            <div>分享服务未启用</div>
-          </div>
-        </div>
-      </template>
-      <template v-else-if="select === 'receive'">
-        <div class="tips flex align-center justify-center full-width">
-          <div class="text-center">
-            <el-icon class="tips-icon">
-              <RemoveFilled />
-            </el-icon>
-            <div>接收服务未启用</div>
-          </div>
-        </div>
-      </template>
+      <share-tab ref="share" v-if="select === 'share'" />
+      <div class="text-center pa-10" v-else-if="select === 'receive'">
+        receive
+      </div>
     </div>
   </div>
   <div class="foot flex align-center justify-center" @click="foldWin">
@@ -50,18 +34,19 @@
 </template>
 
 <script>
-import { Upload, Download, RemoveFilled, ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
-import share from '../../basic/plugins/share';
+import { Upload, Download, ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue';
+import ShareTab from '../components/share-tab.vue';
 import { win } from '../plugins/util';
 
 export default {
   name: 'home',
-  components: { Upload, Download, RemoveFilled, ArrowUpBold, ArrowDownBold },
+  components: { Upload, Download, ArrowUpBold, ArrowDownBold, ShareTab },
   data() {
     return {
       select: 'share',
       fold: false,
       show: true,
+      drop: false,
       list: {
         share: [],
         receive: []
@@ -69,16 +54,15 @@ export default {
     }
   },
   methods: {
+    init() {
+      let dropbox = document.getElementById("drop");
+      dropbox.addEventListener("dragleave", this.dragEnd);
+      dropbox.addEventListener("drop", this.dropEnd, false);
+      window.addEventListener("dragenter", this.dragStart);
+      window.addEventListener("dragover", this.dragStart);
+    },
     switchTab(tab) {
       this.select = tab;
-      if (tab == 'share') this.getShareList();
-      else this.getReceiveList();
-    },
-    getShareList() {
-      this.list.share = share.getList();
-    },
-    getReceiveList() {
-
     },
     foldWin() {
       if (this.fold) {
@@ -94,8 +78,15 @@ export default {
     }
   },
   mounted() {
-    this.getShareList();
-    this.getReceiveList();
+    this.init();
+  },
+  watch: {
+    '$route.query': {
+      handler(to, from) {
+        console.log(to, from);
+      },
+      deep: true
+    }
   }
 }
 </script>
@@ -132,16 +123,6 @@ export default {
   background-color: var(--app-content-color);
   height: calc(100vh - 132px);
   width: 100vw;
-}
-
-.tips {
-  height: calc(100vh - 132px);
-}
-
-.tips-icon {
-  margin-bottom: 20px;
-  color: #c45656;
-  font-size: 80px;
 }
 
 .foot {

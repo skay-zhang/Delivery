@@ -57,6 +57,11 @@ body {
   width: 100%;
 }
 
+.card{
+  background-color: var(--app-head-color);
+  border-radius: 8px;
+}
+
 .no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -99,8 +104,24 @@ body {
   color: #999;
 }
 
+.float-right{
+  float: right;
+}
+
 .mr-5 {
   margin-right: 5px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.pa-10{
+  padding: 10px;
 }
 
 .dot-red {
@@ -117,6 +138,11 @@ body {
   width: 8px;
 }
 
+.line-1{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 
 

@@ -35,7 +35,7 @@ async function createWindow() {
     transparent: true,
     maximizable: false,
     fullscreenable: false,
-    icon: join(ROOT_PATH.public, 'img/tray-light.png'),
+    icon: join(ROOT_PATH.public, 'logo/tray-light.png'),
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -68,7 +68,7 @@ app.on('ready', async () => {
 // 监控主题变化
 nativeTheme.on('updated', () => {
   let isDark = nativeTheme.shouldUseDarkColors;
-  let iconPath = join(ROOT_PATH.public, 'img/tray-' + (isDark ? 'light' : 'dark') + '.png');
+  let iconPath = join(ROOT_PATH.public, 'logo/tray-' + (isDark ? 'light' : 'dark') + '.png');
   win.setIcon(iconPath);
   tray.setImage(iconPath);
 })
@@ -116,7 +116,7 @@ ipcMain.handle('open-win', (event, arg) => {
 
 
 function initMenu() {
-  tray = new Tray(join(ROOT_PATH.public, 'img/tray-light.png'));
+  tray = new Tray(join(ROOT_PATH.public, 'logo/tray-light.png'));
   const contextMenu = Menu.buildFromTemplate([
     {
       label: '显示窗口',
