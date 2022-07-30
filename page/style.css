@@ -52,7 +52,6 @@ body {
 }
 
 #app {
-  background-color: var(--app-background-color);
   color: var(--app-text-color);
   border-radius: 0 0 8px 8px;
   width: 100%;
@@ -127,41 +126,66 @@ body {
 
 
 
+.el-tabs{
+  background-color: var(--app-background-color);
+  border-radius: 0 0 8px 8px;
+}
 
-
-.el-tabs__header{
+.el-tabs__header {
   background-color: var(--app-menu-color);
 }
 
-.el-tabs__item{
-  background-color: var(--app-menu-color);
+.el-tabs__item {
   border-right: 2px solid var(--app-head-border-color);
+  background-color: var(--app-menu-color);
   color: #999999 !important;
 }
 
-.el-tabs__item:hover{
+.el-tabs__item:hover {
   background-color: var(--app-menu-hover-color);
 }
 
-.el-tabs__item:active{
+.el-tabs__item:active {
   background-color: var(--app-menu-active-color);
 }
 
-.el-tabs__item.is-active{
+.el-tabs__item.is-active {
   background-color: var(--app-menu-active-color);
   color: var(--app-text-color) !important;
 }
 
-.el-tabs__active-bar{
+.el-tabs__active-bar {
   background-color: var(--app-menu-active-border-color) !important;
 }
 
-.el-tabs__nav-wrap::after{
+.el-tabs__nav-wrap::after {
   background-color: var(--app-head-border-color) !important;
 }
 
+@keyframes loading-rotate{to{transform:rotate(360deg)}}
+
+.el-loading-spinner .circular {
+  background-color: var(--app-background-color);
+  animation: loading-rotate 1s linear infinite;
+  box-shadow: 0 0 10px 0 #333333;
+  border-radius: 100%;
+  display: inline;
+  padding: 3px;
+  height: 40px;
+  width: 40px;
+}
+
+.el-loading-spinner .path {
+  animation: loading-dash 1.5s ease-in-out infinite;
+  stroke: var(--app-text-color);
+  stroke-dasharray: 90, 150;
+  stroke-linecap: round;
+  stroke-dashoffset: 0;
+  stroke-width: 5;
+}
+
 @media (prefers-color-scheme: light) {
-  .el-tabs__item{
+  .el-tabs__item {
     color: #999999 !important;
   }
 }

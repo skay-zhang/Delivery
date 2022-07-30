@@ -30,7 +30,7 @@
 <script>
 import { ArrowLeftBold } from '@element-plus/icons-vue'
 import { win } from '../plugins/util';
-import { config } from '../../basic/config';
+import config from '../../basic/config';
 
 export default {
   name: 'setting',
