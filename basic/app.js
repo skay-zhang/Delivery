@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, Tray, Menu, ipcMain, nativeTheme } from 'electron'
 import { release } from 'os'
 import { join } from 'path'
 
@@ -19,12 +19,14 @@ export const ROOT_PATH = {
 }
 
 let win = null;
+let tray = null;
 const preload = join(__dirname, './preload/index.js')
 const url = `http://${process.env['VITE_DEV_SERVER_HOST']}:${process.env['VITE_DEV_SERVER_PORT']}`
 const indexHtml = join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
+    title: 'Delivery',
     width: 350,
     height: 700,
     frame: false,
@@ -33,12 +35,9 @@ async function createWindow() {
     transparent: true,
     maximizable: false,
     fullscreenable: false,
-    icon: join(ROOT_PATH.public, 'favicon.ico'),
+    icon: join(ROOT_PATH.public, 'img/tray-light.png'),
     webPreferences: {
       preload,
-      // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -49,33 +48,7 @@ async function createWindow() {
     win.loadURL(url)
     win.webContents.openDevTools()
   }
-
-  // Test actively push message to the Electron-Renderer
-  win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
-  })
-
-  // Make all links open with the browser, not with the application
-  win.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('https:')) shell.openExternal(url)
-    return { action: 'deny' }
-  })
 }
-
-app.whenReady().then(createWindow)
-
-app.on('window-all-closed', () => {
-  win = null
-  if (process.platform !== 'darwin') app.quit()
-})
-
-app.on('second-instance', () => {
-  if (win) {
-    // Focus on the main window if the user tried to open another
-    if (win.isMinimized()) win.restore()
-    win.focus()
-  }
-})
 
 app.on('activate', () => {
   const allWindows = BrowserWindow.getAllWindows()
@@ -84,6 +57,20 @@ app.on('activate', () => {
   } else {
     createWindow()
   }
+})
+
+// 应用就绪
+app.on('ready', async () => {
+  initMenu()
+  createWindow()
+})
+
+// 监控主题变化
+nativeTheme.on('updated', () => {
+  let isDark = nativeTheme.shouldUseDarkColors;
+  let iconPath = join(ROOT_PATH.public, 'img/tray-' + (isDark ? 'light' : 'dark') + '.png');
+  win.setIcon(iconPath);
+  tray.setImage(iconPath);
 })
 
 // 折叠窗口
@@ -126,3 +113,41 @@ ipcMain.handle('open-win', (event, arg) => {
     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
 })
+
+
+function initMenu() {
+  tray = new Tray(join(ROOT_PATH.public, 'img/tray-light.png'));
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: '显示窗口',
+      click: () => {
+        win.show()
+      }
+    },
+    { type: 'separator' },
+    {
+      label: '访问地址',
+      submenu: [
+        { label: '点击地址即可复制', enabled: false },
+        { label: '192.168.1.160:56565' },
+      ]
+    },
+    { type: 'separator' },
+    { label: '共享服务', type: 'checkbox', checked: true },
+    { label: '接收服务', type: 'checkbox' },
+    { type: 'separator' },
+    { label: '关于 Delivery', role: 'about' },
+    { label: '检查更新' },
+    {
+      label: '退出',
+      click: () => {
+        app.quit()
+      }
+    },
+  ])
+  tray.setToolTip('Delivery');
+  tray.setContextMenu(contextMenu);
+  tray.on('click', () => {
+    win.show();
+  })
+}
