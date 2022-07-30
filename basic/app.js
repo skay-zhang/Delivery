@@ -86,12 +86,29 @@ app.on('activate', () => {
   }
 })
 
-ipcMain.on('win-fold', (event, arg)=>{
-  win.setSize(350,103);
+// 折叠窗口
+ipcMain.on('win-fold', (event, arg) => {
+  win.setSize(350, 103);
 })
 
-ipcMain.on('win-open', (event, arg)=>{
-  win.setSize(350,700);
+// 展开窗口
+ipcMain.on('win-open', (event, arg) => {
+  win.setSize(350, 700);
+})
+
+// 隐藏窗口
+ipcMain.on('win-min', function () {
+  win.minimize();
+})
+
+// 关闭窗口
+ipcMain.on('win-close', function () {
+  win.hide();
+})
+
+// 获取用户数据文件夹
+ipcMain.on('get-user-data', (event, arg) => {
+  event.returnValue = app.getPath('userData');
 })
 
 // new window example arg: new windows url

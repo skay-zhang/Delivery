@@ -1,9 +1,8 @@
-import { exec } from 'child_process';
-
-import { app } from 'electron'
+import { ipcRenderer } from 'electron'
+import { join } from 'path'
 import fs from 'fs'
 
-const configPath = path.join(app.getPath('userData'), 'config.json');
+let configPath = join(ipcRenderer.sendSync('get-user-data'), 'config.json');
 
 // 初始化配置
 function initConfig() {
@@ -14,13 +13,13 @@ function initConfig() {
         logs: {},
         advanced: {}
     };
-    fs.writeFileSync(configPath, JSON.stringify(defaultData));
+    fs.writeFileSync(configPath, JSON.stringify(defaultData), 'utf8');
     return defaultData;
 }
 
 // 获取配置数据(是否强制初始化)
 function getData(init) {
-    if (init) return initConfig();
+    if (init || !fs.existsSync(configPath)) return initConfig();
     let data = fs.readFileSync(configPath, 'utf-8');
     if (data) return JSON.parse(data);
     else return initConfig();
@@ -28,10 +27,13 @@ function getData(init) {
 
 // 保存配置数据
 function saveData(data) {
-    fs.writeFileSync(configPath, JSON.stringify(data));
+    fs.writeFileSync(configPath, JSON.stringify(data), 'utf8');
 }
 
 const config = {
+    getPath() {
+        return configPath
+    },
     // 获取配置单元
     getModule(key) {
         let data = getData();
