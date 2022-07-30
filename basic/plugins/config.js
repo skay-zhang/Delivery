@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron'
 import { join } from 'path'
 import fs from 'fs'
 
-let configPath = join(ipcRenderer.sendSync('get-user-data'), 'config.json');
+let configPath = join(ipcRenderer.sendSync('get-user-data'), 'config.conf');
 
 // 初始化配置
 function initConfig() {

@@ -5,49 +5,62 @@
     </el-icon>
     <div>返回</div>
   </div>
-  <el-tabs v-model="active" tab-position="left" class="setting-tabs">
-    <el-tab-pane name="service" label="服务">
-      <div class="content">HTTP服务、WebRTC服务、P2P服务</div>
-    </el-tab-pane>
-    <el-tab-pane name="network" label="网络">
-      <div class="content">P2P网络、HTTP端口</div>
-    </el-tab-pane>
-    <el-tab-pane name="security" label="安全">
-      <div class="content">黑白名单、账户机制</div>
-    </el-tab-pane>
-    <el-tab-pane name="logs" label="日志">
-      <div class="content">日志管理、日志列表</div>
-    </el-tab-pane>
-    <el-tab-pane name="advanced" label="高级">
-      <div class="content">开放接口、实验功能</div>
-    </el-tab-pane>
-    <el-tab-pane name="about" label="关于">
-      <div class="content">关于 Delivery</div>
-    </el-tab-pane>
-  </el-tabs>
+  <div v-loading="loading">
+    <el-tabs v-model="active" tab-position="left" class="setting-tabs" @tab-change="switchTab">
+      <el-tab-pane name="service" label="服务">
+        <div class="content">HTTP服务、WebRTC服务、P2P服务</div>
+      </el-tab-pane>
+      <el-tab-pane name="network" label="网络">
+        <div class="content">P2P网络、HTTP端口</div>
+      </el-tab-pane>
+      <el-tab-pane name="security" label="安全">
+        <div class="content">黑白名单、账户机制</div>
+      </el-tab-pane>
+      <el-tab-pane name="logs" label="日志">
+        <div class="content">日志管理、日志列表</div>
+      </el-tab-pane>
+      <el-tab-pane name="advanced" label="高级">
+        <div class="content">开放接口、实验功能</div>
+      </el-tab-pane>
+      <el-tab-pane name="about" label="关于">
+        <div class="content">关于 Delivery</div>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>
 import { ArrowLeftBold } from '@element-plus/icons-vue'
+import config from '../../basic/plugins/config';
 import { win } from '../plugins/util';
-import config from '../../basic/config';
 
 export default {
   name: 'setting',
   components: { ArrowLeftBold },
   data() {
     return {
+      loading: true,
       active: 'service',
-      conf: {}
+      conf: {},
+      out: 0
     }
   },
   methods: {
     init() {
+      this.loading = true;
       let tab = this.$route.query.tab;
       if (tab) {
         this.active = tab;
         this.conf = config.getModule(tab);
       }
+      this.switchTab();
+    },
+    switchTab() {
+      clearTimeout(this.out);
+      if (!this.loading) this.loading = true;
+      this.out = setTimeout(() => {
+        this.loading = false;
+      }, 1000);
     },
     back() {
       this.$router.push('/home');

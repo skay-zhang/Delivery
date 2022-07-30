@@ -164,6 +164,10 @@ body {
 
 @keyframes loading-rotate{to{transform:rotate(360deg)}}
 
+.el-loading-mask{
+  background-color: rgba(0,0,0,.3) !important;
+}
+
 .el-loading-spinner .circular {
   background-color: var(--app-background-color);
   animation: loading-rotate 1s linear infinite;
@@ -177,7 +181,7 @@ body {
 
 .el-loading-spinner .path {
   animation: loading-dash 1.5s ease-in-out infinite;
-  stroke: var(--app-text-color);
+  stroke: var(--app-text-color) !important;
   stroke-dasharray: 90, 150;
   stroke-linecap: round;
   stroke-dashoffset: 0;

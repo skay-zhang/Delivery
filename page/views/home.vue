@@ -51,6 +51,7 @@
 
 <script>
 import { Upload, Download, RemoveFilled, ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
+import share from '../../basic/plugins/share';
 import { win } from '../plugins/util';
 
 export default {
@@ -60,12 +61,24 @@ export default {
     return {
       select: 'share',
       fold: false,
-      show: true
+      show: true,
+      list: {
+        share: [],
+        receive: []
+      }
     }
   },
   methods: {
     switchTab(tab) {
       this.select = tab;
+      if (tab == 'share') this.getShareList();
+      else this.getReceiveList();
+    },
+    getShareList() {
+      this.list.share = share.getList();
+    },
+    getReceiveList() {
+
     },
     foldWin() {
       if (this.fold) {
@@ -80,6 +93,10 @@ export default {
       this.fold = !this.fold;
     }
   },
+  mounted() {
+    this.getShareList();
+    this.getReceiveList();
+  }
 }
 </script>
 
