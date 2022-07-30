@@ -4,6 +4,8 @@
 ![Version](https://img.shields.io/badge/dev-0.0.1-red.svg)
 [![Node](https://img.shields.io/badge/node-%E2%89%A516.16.0-blue.svg)](https://nodejs.org/)
 
+> Delivery is in its early stages and is not yet available!
+
 ## How to start development
 
 ```shell
