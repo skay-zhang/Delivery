@@ -45,6 +45,10 @@ yarn run app:dev
 * Vite == 2.9.13
 * Vue >= 3.2.37
 
+## 💻 Screenshot
+
+![ui](doc/ui.jpg)
+
 ## 😊 Thanks
 Thanks to the following projects that make Delivery possible.
 
