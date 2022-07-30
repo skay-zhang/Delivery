@@ -7,6 +7,12 @@ export const win = {
     },
     open(){
         ipcRenderer.send('win-open');
+    },
+    min(){
+        ipcRenderer.send('win-min');
+    },
+    close(){
+        ipcRenderer.send('win-close');
     }
 }
 

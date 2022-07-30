@@ -1,17 +1,17 @@
 <template>
   <div id="app-head">
     <div id="head-bar" :class="system">
-      <div class="minimize left">
+      <div class="minimize left" @click="min">
         <el-icon>
           <Minus />
         </el-icon>
       </div>
-      <div class="close">
+      <div class="close" @click="close">
         <el-icon>
           <Close />
         </el-icon>
       </div>
-      <div class="minimize right">
+      <div class="minimize right" @click="min">
         <el-icon>
           <Minus />
         </el-icon>
@@ -23,6 +23,7 @@
 
 <script>
 import { Close, Minus } from '@element-plus/icons-vue'
+import { win } from '../plugins/util';
 
 export default {
   name: "appHead",
@@ -31,6 +32,14 @@ export default {
     system: {
       type: String,
       default: 'other'
+    }
+  },
+  methods:{
+    min(){
+      win.min();
+    },
+    close(){
+      win.close();
     }
   }
 };
@@ -81,6 +90,10 @@ export default {
   display: flex;
   height: 30px;
   width: 30px;
+}
+
+#head-bar.windows .close{
+  border-radius: 0 8px 0 0;
 }
 
 #head-bar.windows .minimize.right {
