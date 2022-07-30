@@ -43,12 +43,14 @@
       "dist"
     ],
     "mac": {
+      "icon": "public/img/logo.png",
       "artifactName": "${productName}_${version}.${ext}",
       "target": [
         "dmg"
       ]
     },
     "win": {
+      "icon": "public/img/logo.ico",
       "target": [
         {
           "target": "nsis",
