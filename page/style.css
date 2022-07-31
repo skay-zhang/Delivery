@@ -53,7 +53,7 @@ body {
 
 #app {
   color: var(--app-text-color);
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
   width: 100%;
 }
 
@@ -124,6 +124,10 @@ body {
   padding: 10px;
 }
 
+.pb-0{
+  padding-bottom: 0;
+}
+
 .dot-red {
   background-color: #c45656;
   border-radius: 50%;
@@ -153,8 +157,10 @@ body {
 
 
 .el-tabs{
+  border: 1px solid var(--app-head-border-color);
   background-color: var(--app-background-color);
   border-radius: 0 0 8px 8px;
+  border-top: none;
 }
 
 .el-tabs__header {
@@ -195,6 +201,7 @@ body {
 }
 
 .el-loading-spinner .circular {
+  border: 1px solid var(--app-head-border-color);
   background-color: var(--app-background-color);
   animation: loading-rotate 1s linear infinite;
   box-shadow: 0 0 10px 0 #333333;
@@ -212,6 +219,58 @@ body {
   stroke-linecap: round;
   stroke-dashoffset: 0;
   stroke-width: 5;
+}
+
+.el-message{
+  transition: all ease-out 0.3s;
+  justify-content: center;
+  top: 3px !important;
+  align-items: center;
+  border-radius: 20px;
+  position: fixed;
+  display: flex;
+  height: 24px;
+  width: 64vw;
+  left: 18vw;
+}
+
+.el-message i{
+  position: absolute;
+  margin-right: 5px;
+  font-size: 22px;
+  left: 1px;
+  top: 0;
+}
+
+.el-message p{
+  width: calc(64vw - 25px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 5px;
+  text-align: center;
+  margin-left: 25px;
+  overflow: hidden;
+}
+
+.el-message--success{
+  background-color: #529b2e;
+}
+
+.el-message--warning{
+  background-color: #ff9900;
+}
+
+.el-message--error{
+  background-color: #c45656;
+}
+
+.el-message--info{
+  background-color: #235db9;
+}
+
+.el-message--success i,
+.el-message--info i{
+  top: 2px;
 }
 
 @media (prefers-color-scheme: light) {

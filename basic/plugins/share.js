@@ -73,7 +73,6 @@ const share = {
     getIcon(list){
         for(let a in list){
             let file = list[a];
-            console.log(file.type)
             for(let key in mime){
                 for(let b in mime[key]){
                     if(mime[key][b] == file.type) {

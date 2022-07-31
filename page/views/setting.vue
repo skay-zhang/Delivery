@@ -83,15 +83,17 @@ export default {
 
 <style scoped>
 .back {
-  border-bottom: 1px solid var(--app-head-border-color);
+  border: 1px solid var(--app-head-border-color);
   background-color: var(--app-menu-color);
+  width: calc(100vw - 2px);
+  border-top: none;
   cursor: pointer;
   height: 28px;
-  width: 100vw;
 }
 
 .setting-tabs {
-  height: calc(100vh - 110px);
+  height: calc(100vh - 111px);
+  width: calc(100vw - 2px);
 }
 
 .content {

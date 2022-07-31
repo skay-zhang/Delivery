@@ -1,42 +1,40 @@
 <template>
   <div>
-    <div class="pa-10" v-if="enable">
-      <div class="card pa-10 flex align-center mb-10" v-for="(item, i) in list" :key="'sf-' + i">
-        <img class="icon" :src="'/img/' + item.icon + '.png'" />
-        <div class="info">
-          <div class="size text-small float-right">{{ item.size }}</div>
-          <div class="mb-5 line-1">{{ item.name }}</div>
-          <div class="text-small text-gray line-1">{{ item.path }}</div>
+    <el-scrollbar height="568px" noresize>
+      <div>
+        <div class="pa-10 pb-0" v-if="enable">
+          <share-item :list="list" />
+        </div>
+        <div class="tips flex align-center justify-center full-width" v-else>
+          <div class="text-center">
+            <el-icon class="tips-icon">
+              <RemoveFilled />
+            </el-icon>
+            <div>分享服务未启用</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="tips flex align-center justify-center full-width" v-else>
-      <div class="text-center">
-        <el-icon class="tips-icon">
-          <RemoveFilled />
-        </el-icon>
-        <div>分享服务未启用</div>
+      <div id="drop" class="flex align-center justify-center" v-show="drop">
+        <div class="text-center">
+          <el-icon class="drop-icon">
+            <Pointer />
+          </el-icon>
+          <div>拖入文件即可加入分享</div>
+        </div>
+        <div id="drop-mask"></div>
       </div>
-    </div>
-  </div>
-  <div id="drop" class="flex align-center justify-center" v-show="drop">
-    <div class="text-center">
-      <el-icon class="drop-icon">
-        <Pointer />
-      </el-icon>
-      <div>拖入文件即可加入分享</div>
-    </div>
-    <div id="drop-mask"></div>
+    </el-scrollbar>
   </div>
 </template>
 
 <script>
 import { RemoveFilled, Pointer } from '@element-plus/icons-vue'
 import share from '../../basic/plugins/share';
+import ShareItem from './share-item.vue';
 
 export default {
   name: "shareTab",
-  components: { RemoveFilled, Pointer },
+  components: { RemoveFilled, Pointer, ShareItem },
   data() {
     return {
       enable: true,

@@ -34,11 +34,11 @@ export default {
       default: 'other'
     }
   },
-  methods:{
-    min(){
+  methods: {
+    min() {
       win.min();
     },
-    close(){
+    close() {
       win.close();
     }
   }
@@ -47,6 +47,7 @@ export default {
 
 <style scoped>
 #app-head {
+  border: 1px solid var(--app-head-border-color);
   background-color: var(--app-head-color);
   color: var(--app-head-text-color);
   border-radius: 8px 8px 0 0;
@@ -54,13 +55,14 @@ export default {
   -webkit-user-select: none;
   -webkit-app-region: drag;
   justify-content: center;
+  width: calc(100% - 2px);
+  border-bottom: none;
   align-items: center;
   font-weight: bold;
   user-select: none;
   font-size: 12px;
   display: flex;
-  height: 30px;
-  width: 100%;
+  height: 29px;
 }
 
 .title {
@@ -92,7 +94,7 @@ export default {
   width: 30px;
 }
 
-#head-bar.windows .close{
+#head-bar.windows .close {
   border-radius: 0 8px 0 0;
 }
 

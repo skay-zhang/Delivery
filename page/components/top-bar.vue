@@ -56,10 +56,9 @@ export default {
 
 <style scoped>
 .top-bar {
-  border-bottom: 1px solid var(--app-head-border-color);
-  border-top: 1px solid var(--app-head-border-color);
+  border: 1px solid var(--app-head-border-color);
   background-color: var(--app-head-color);
-  width: 100vw;
+  width: calc(100vw - 2px);
   height: 49px;
 }
 

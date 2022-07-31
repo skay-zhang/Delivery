@@ -93,7 +93,8 @@ export default {
 
 <style scoped>
 .menu {
-  border-bottom: 1px solid var(--app-head-border-color);
+  border: 1px solid var(--app-head-border-color);
+  border-top: none;
   z-index: 4;
 }
 
@@ -120,19 +121,20 @@ export default {
 }
 
 .content {
+  border-right: 1px solid var(--app-head-border-color);
+  border-left: 1px solid var(--app-head-border-color);
   background-color: var(--app-content-color);
   height: calc(100vh - 132px);
-  width: 100vw;
+  width: calc(100vw -2px);
 }
 
 .foot {
-  border-bottom: 1px solid var(--app-head-border-color);
-  border-top: 1px solid var(--app-head-border-color);
+  border: 1px solid var(--app-head-border-color);
   background-color: var(--app-head-color);
   color: var(--app-head-text-color);
   border-radius: 0 0 8px 8px;
+  width: calc(100vw - 2px);
   cursor: pointer;
-  width: 100vw;
   height: 20px;
 }
 </style>
