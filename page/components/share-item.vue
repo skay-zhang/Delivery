@@ -23,6 +23,10 @@
     <div class="text-gray">已选择 {{ number }} 项</div>
     <el-button type="danger">删除</el-button>
   </div>
+  <el-drawer v-model="info.show" :title="info.data.name" direction="btt"
+    :before-close="closeInfo">
+    <span>Hi, there!</span>
+  </el-drawer>
 </template>
 
 <script>
@@ -40,15 +44,20 @@ export default {
   },
   data() {
     return {
-      number: 0
+      number: 0,
+      info:{
+        show: false,
+        data: {}
+      }
     }
   },
   methods: {
     openInfo(item) {
-      this.$message({
-        type: 'warning',
-        message: 'click '+item.name
-      })
+      this.info.show = true;
+      this.info.data = item;
+    },
+    closeInfo(){
+      this.info.show = false;
     },
     remove(path) {
       console.log('remove')

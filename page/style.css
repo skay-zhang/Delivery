@@ -2,7 +2,6 @@
   font-family: Ubuntu, "Helvetica Neue", Helvetica, "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 14px;
-  line-height: 14px;
   font-weight: normal;
   color-scheme: light dark;
   font-synthesis: none;
@@ -198,6 +197,7 @@ body {
 
 .el-loading-mask{
   background-color: rgba(0,0,0,.3) !important;
+  border-radius: 8px;
 }
 
 .el-loading-spinner .circular {
@@ -271,6 +271,30 @@ body {
 .el-message--success i,
 .el-message--info i{
   top: 2px;
+}
+
+.el-drawer{
+  background-color: var(--app-head-color) !important;
+  border-radius: 10px 10px 8px 8px;
+}
+
+.el-drawer__header{
+  padding: 8px 10px 0 10px !important;
+  margin-bottom: 0 !important;
+}
+
+.el-drawer__body{
+  padding: 10px !important;
+}
+
+.el-drawer__title{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.el-overlay{
+  border-radius: 8px;
 }
 
 @media (prefers-color-scheme: light) {
