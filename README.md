@@ -59,6 +59,7 @@ Thanks to the following projects that make Delivery possible.
 * [NodeJS](https://github.com/nodejs/node)
 * [Vite](https://github.com/vitejs/vite)
 * [Vue](https://github.com/vuejs/vue)
+* [Pinia](https://github.com/vuejs/pinia)
 * [Electron Builder](https://github.com/electron-userland/electron-builder)
 * [Element Plus](https://github.com/element-plus/element-plus)
 

@@ -14,18 +14,19 @@
     "node": ">=16.16.0"
   },
   "devDependencies": {
-    "unplugin-vue-components": "^0.21.2",
     "@element-plus/icons-vue": "^2.0.6",
-    "unplugin-auto-import": "^0.10.2",
-    "vite-plugin-electron": "^0.8.1",
     "@vitejs/plugin-vue": "^2.3.3",
+    "concurrently": "^7.3.0",
+    "electron": "^19.0.9",
     "electron-builder": "^23.1.0",
     "element-plus": "^2.2.11",
-    "concurrently": "^7.3.0",
-    "vue-router": "^4.1.3",
-    "electron": "^19.0.9",
+    "unplugin-auto-import": "^0.10.2",
+    "unplugin-vue-components": "^0.21.2",
     "vite": "^2.9.13",
-    "vue": "^3.2.37"
+    "vite-plugin-electron": "^0.8.1",
+    "vue": "^3.2.37",
+    "pinia": "^2.0.17",
+    "vue-router": "^4.1.3"
   },
   "env": {
     "VITE_DEV_SERVER_HOST": "127.0.0.1",
