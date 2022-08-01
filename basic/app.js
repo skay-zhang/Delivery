@@ -25,6 +25,7 @@ const url = `http://${process.env['VITE_DEV_SERVER_HOST']}:${process.env['VITE_D
 const indexHtml = join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
+  let isDark = nativeTheme.shouldUseDarkColors;
   win = new BrowserWindow({
     title: 'Delivery',
     width: 350,
@@ -35,7 +36,7 @@ async function createWindow() {
     transparent: true,
     maximizable: false,
     fullscreenable: false,
-    icon: join(ROOT_PATH.public, 'logo/tray-light.png'),
+    icon: join(ROOT_PATH.public, 'logo/tray-' + (isDark ? 'light' : 'dark') + '.png'),
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -116,7 +117,8 @@ ipcMain.handle('open-win', (event, arg) => {
 
 
 function initMenu() {
-  tray = new Tray(join(ROOT_PATH.public, 'logo/tray-light.png'));
+  let isDark = nativeTheme.shouldUseDarkColors;
+  tray = new Tray(join(ROOT_PATH.public, 'logo/tray-' + (isDark ? 'light' : 'dark') + '.png'));
   const contextMenu = Menu.buildFromTemplate([
     {
       label: '显示窗口',
@@ -148,6 +150,6 @@ function initMenu() {
   tray.setToolTip('Delivery');
   tray.setContextMenu(contextMenu);
   tray.on('click', () => {
-    win.show();
+    tray.popUpContextMenu();
   })
 }
