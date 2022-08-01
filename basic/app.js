@@ -1,4 +1,5 @@
 import { app, BrowserWindow, Tray, Menu, ipcMain, nativeTheme } from 'electron'
+import httpService from "./plugins/http"
 import { release } from 'os'
 import { join } from 'path'
 
@@ -62,8 +63,9 @@ app.on('activate', () => {
 
 // 应用就绪
 app.on('ready', async () => {
-  initMenu()
-  createWindow()
+  initMenu();
+  createWindow();
+  setTimeout(()=> httpService.start(),1000);
 })
 
 // 监控主题变化
@@ -97,6 +99,12 @@ ipcMain.on('win-close', function () {
 // 获取用户数据文件夹
 ipcMain.on('get-user-data', (event, arg) => {
   event.returnValue = app.getPath('userData');
+})
+
+// 重启Http服务
+ipcMain.on('http-restart', (event, arg) => {
+  httpService.stop();
+  setTimeout(()=> httpService.start(),1000);
 })
 
 // new window example arg: new windows url

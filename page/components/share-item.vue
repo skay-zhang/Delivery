@@ -3,7 +3,7 @@
     @click="openInfo(item)">
     <div class="left" @click.stop>
       <el-checkbox class="select" v-model="item.select" size="large" @change="selectItem" />
-      <img class="icon" :src="'/img/' + item.icon + '.png'" />
+      <img class="icon" :src="'./img/' + item.icon + '.png'" />
     </div>
     <div class="info">
       <div class="size text-small float-right">{{ item.size }}</div>
