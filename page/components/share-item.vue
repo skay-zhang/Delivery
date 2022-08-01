@@ -10,7 +10,7 @@
       <div class="title mb-5 line-1">{{ item.name }}</div>
       <div class="text-small text-gray line-1">{{ item.path }}</div>
     </div>
-    <div class="remove flex align-center justify-center" @click.stop="remove(item.path)">
+    <div class="remove flex align-center justify-center" @click.stop="remove(item.name, item.path)">
       <el-icon>
         <Delete />
       </el-icon>
@@ -59,8 +59,12 @@ export default {
     closeInfo() {
       this.info.show = false;
     },
-    remove(path) {
-      console.log('remove')
+    remove(name, path) {
+      console.log('remove');
+      this.$confirm('确认要将`' + name + '`从分享服务中移除吗?', '移除分享', {
+        type: 'warning',
+        'confirm-button-text': '确认移除'
+      })
     },
     selectItem(e) {
       if (e) this.number = this.number + 1;
