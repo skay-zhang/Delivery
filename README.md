@@ -31,8 +31,8 @@ yarn run app:dev
 
 ## 🛠 Route
 
-* [ ] Basic UI: Includes only transfer-related screens
-* [ ] HTTP Service: for LAN transmission
+* [X] Basic UI: Includes only transfer-related screens
+* [X] HTTP Service: for LAN transmission
 * [ ] WebRTC Service: for WAN transmission
 * [ ] P2P ICE: for transmission without public IP
 * [ ] Advanced UI: Refine all interfaces
@@ -50,7 +50,11 @@ yarn run app:dev
 
 ## 💻 Screenshot
 
-![ui](doc/ui.jpg)
+<div>
+  <img src="doc/screenshot/share.png" width="32%" />
+  <img src="doc/screenshot/receive.png" width="32%" />
+  <img src="doc/screenshot/setting.png" width="32%" />
+</div>
 
 ## 😊 Thanks
 Thanks to the following projects that make Delivery possible.
