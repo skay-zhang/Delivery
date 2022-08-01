@@ -101,7 +101,7 @@ export default {
   border-left: 1px solid var(--app-head-border-color);
   background-color: var(--app-content-color);
   height: calc(100vh - 132px);
-  width: calc(100vw -2px);
+  width: calc(100vw - 2px);
 }
 
 .foot {

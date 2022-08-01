@@ -63,6 +63,10 @@ Thanks to the following projects that make Delivery possible.
 * [Electron Builder](https://github.com/electron-userland/electron-builder)
 * [Element Plus](https://github.com/element-plus/element-plus)
 
+## ❌ Errors requiring manual adjustment
+
+There is a bug in **http-errors** that is not currently fixed, you need to add `if(!statuses.message) return;` to **http-errors** after line **260** of **index.js** before.
+
 ## License
 
 [MIT](LICENSE)

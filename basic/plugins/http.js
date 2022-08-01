@@ -109,8 +109,8 @@ function downFile(type, path, res) {
 }
 
 function initService() {
-    let app = express()
-    app.get('/api/state', (req, res) => {
+    let serve = express()
+    serve.get('/api/state', (req, res) => {
         let state = {
             share: conf.service.share.enable,
             receive: conf.service.receive.enable
@@ -118,12 +118,8 @@ function initService() {
         res.setHeader("Content-Type", "application/json")
         res.send({ state: true, data: state })
     })
-    app.get('/api/path', (req, res) => {
-        res.setHeader("Content-Type", "application/json")
-        res.send({ state: true, data: path.join(__dirname, app.isPackaged ? './client' : '../../client') })
-    })
-    app.use(express.static(path.join(__dirname, app.isPackaged ? './client' : '../../client')))
-    return app
+    serve.use(express.static(path.join(__dirname, app.isPackaged ? '../client' : '../../public/client')))
+    return serve
 }
 
 function returnError(msg, res) {
