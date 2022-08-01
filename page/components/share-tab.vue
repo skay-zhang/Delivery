@@ -1,18 +1,8 @@
 <template>
   <div>
     <el-scrollbar height="568px" noresize>
-      <div>
-        <div class="pa-10 pb-0" v-if="enable">
-          <share-item :list="list" />
-        </div>
-        <div class="tips flex align-center justify-center full-width" v-else>
-          <div class="text-center">
-            <el-icon class="tips-icon">
-              <RemoveFilled />
-            </el-icon>
-            <div>分享服务未启用</div>
-          </div>
-        </div>
+      <div class="pa-10 pb-0">
+        <share-item :list="list" />
       </div>
       <div id="drop" class="flex align-center justify-center" v-show="drop">
         <div class="text-center">
@@ -37,18 +27,24 @@ export default {
   components: { RemoveFilled, Pointer, ShareItem },
   data() {
     return {
-      enable: true,
       drop: false,
       list: []
     }
   },
   methods: {
-    initDrop() {
+    installDrop() {
       let dropbox = document.getElementById("drop");
       dropbox.addEventListener("dragleave", this.dragEnd);
       dropbox.addEventListener("drop", this.dropEnd, false);
       window.addEventListener("dragenter", this.dragStart);
       window.addEventListener("dragover", this.dragStart);
+    },
+    uninstallDrop() {
+      let dropbox = document.getElementById("drop");
+      dropbox.removeEventListener("dragleave", this.dragEnd);
+      dropbox.removeEventListener("drop", this.dropEnd, false);
+      window.removeEventListener("dragenter", this.dragStart);
+      window.removeEventListener("dragover", this.dragStart);
     },
     getList() {
       this.list = share.getList();
@@ -69,32 +65,25 @@ export default {
     },
   },
   mounted() {
-    console.log('share show')
-    this.initDrop();
+    this.installDrop();
     this.getList();
   },
   beforeUnmount() {
-    console.log('share hide')
-    let dropbox = document.getElementById("drop");
-    dropbox.removeEventListener("dragleave", this.dragEnd);
-    dropbox.removeEventListener("drop", this.dropEnd, false);
-    window.removeEventListener("dragenter", this.dragStart);
-    window.removeEventListener("dragover", this.dragStart);
+    this.uninstallDrop();
+  },
+  watch: {
+    '$route.path': {
+      handler(to, from) {
+        if (to === '/home') setTimeout(() => this.installDrop(), 300);
+        else if (from === '/home') this.uninstallDrop();
+      },
+      deep: true
+    }
   }
 };
 </script>
 
 <style scoped>
-.tips {
-  height: calc(100vh - 132px);
-}
-
-.tips-icon {
-  margin-bottom: 20px;
-  color: #c45656;
-  font-size: 80px;
-}
-
 #drop {
   background-color: rgba(0, 0, 0, .3);
   transition: all ease-out 0.3s;
@@ -119,40 +108,5 @@ export default {
 .drop-icon {
   margin-bottom: 20px;
   font-size: 80px;
-}
-
-.icon {
-  background-color: var(--app-topbar-btn-hover-color);
-  transition: all ease-out 0.3s;
-  border-radius: 6px;
-  margin-right: 10px;
-  padding: 3px;
-  height: 30px;
-  width: 30px;
-}
-
-.size {
-  margin-top: -5px;
-}
-
-.info {
-  width: 260px;
-}
-
-.card {
-  transition: all ease-out 0.3s;
-  cursor: pointer;
-}
-
-.card:hover {
-  background-color: var(--app-menu-hover-color);
-}
-
-.card:hover .icon {
-  background-color: var(--app-menu-active-color);
-}
-
-.card:active {
-  background-color: var(--app-menu-active-color);
 }
 </style>

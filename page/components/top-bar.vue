@@ -7,7 +7,7 @@
         </el-icon>
         <div>
           <div class="text-small text-gray">端口</div>
-          <div>56565</div>
+          <div>{{ conf.network.port }}</div>
         </div>
       </div>
       <div class="top-btn flex align-center" @click="openSetting('security')">
@@ -27,12 +27,12 @@
       <div>
         <div class="text-small flex align-center">
           <div class="mr-5">分享:</div>
-          <div class="dot-red mr-5"></div>
+          <div :class="(conf.service.share.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;"></div>
           <div>已停用</div>
         </div>
         <div class="text-small flex align-center">
           <div class="mr-5">接收:</div>
-          <div class="dot-green mr-5"></div>
+          <div :class="(conf.service.receive.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;"></div>
           <div>已启用</div>
         </div>
       </div>
@@ -42,13 +42,20 @@
 
 <script>
 import { Connection, Umbrella, Switch } from '@element-plus/icons-vue'
+import { confStore } from "../plugins/store";
 
 export default {
   name: "topBar",
   components: { Connection, Umbrella, Switch },
+  setup(props) {
+    const conf = confStore();
+    return {
+      conf
+    }
+  },
   methods: {
-    openSetting(tab){
-      this.$router.push('/setting?tab='+tab);
+    openSetting(tab) {
+      this.$router.push('/setting?tab=' + tab);
     }
   }
 };

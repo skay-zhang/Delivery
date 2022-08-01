@@ -18,9 +18,7 @@
   <div class="content" v-if="!fold">
     <div v-show="show">
       <share-tab ref="share" v-if="select === 'share'" />
-      <div class="text-center pa-10" v-else-if="select === 'receive'">
-        receive
-      </div>
+      <receive-tab ref="receive" v-else-if="select === 'receive'" />
     </div>
   </div>
   <div class="foot flex align-center justify-center" @click="foldWin">
@@ -36,31 +34,20 @@
 <script>
 import { Upload, Download, ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue';
 import ShareTab from '../components/share-tab.vue';
+import ReceiveTab from '../components/receive-tab.vue';
 import { win } from '../plugins/util';
 
 export default {
   name: 'home',
-  components: { Upload, Download, ArrowUpBold, ArrowDownBold, ShareTab },
+  components: { Upload, Download, ArrowUpBold, ArrowDownBold, ShareTab,ReceiveTab },
   data() {
     return {
       select: 'share',
       fold: false,
-      show: true,
-      drop: false,
-      list: {
-        share: [],
-        receive: []
-      }
+      show: true
     }
   },
   methods: {
-    init() {
-      let dropbox = document.getElementById("drop");
-      dropbox.addEventListener("dragleave", this.dragEnd);
-      dropbox.addEventListener("drop", this.dropEnd, false);
-      window.addEventListener("dragenter", this.dragStart);
-      window.addEventListener("dragover", this.dragStart);
-    },
     switchTab(tab) {
       this.select = tab;
     },
@@ -75,17 +62,6 @@ export default {
         this.show = false
       }
       this.fold = !this.fold;
-    }
-  },
-  mounted() {
-    this.init();
-  },
-  watch: {
-    '$route.query': {
-      handler(to, from) {
-        console.log(to, from);
-      },
-      deep: true
     }
   }
 }

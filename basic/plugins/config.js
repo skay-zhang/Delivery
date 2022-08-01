@@ -7,8 +7,19 @@ let configPath = join(ipcRenderer.sendSync('get-user-data'), 'config.conf');
 // 初始化配置
 function initConfig() {
     let defaultData = {
-        service: {},
-        network: {},
+        service: {
+            share: {
+                enable: false
+            },
+            receive: {
+                enable: false
+            }
+        },
+        network: {
+            port: 56565,
+            http: {},
+            webrtc: {}
+        },
         security: {},
         logs: {},
         advanced: {}
@@ -34,6 +45,9 @@ const config = {
     getPath() {
         return configPath
     },
+    getAll() {
+        return getData();
+    },
     // 获取配置单元
     getModule(key) {
         let data = getData();
@@ -49,6 +63,11 @@ const config = {
         return '';
     },
     // 更新配置项目
+    update(moduleKey,value) {
+        let data = getData();
+        data[moduleKey] = value;
+        saveData(data);
+    },
     updateItem(moduleKey, itemKey, value) {
         let data = getData();
         let module = data[moduleKey];

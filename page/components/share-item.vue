@@ -16,15 +16,15 @@
       </el-icon>
     </div>
   </div>
-  <div class="foot-bar text-small text-gray flex justify-center">
-    共 {{list.length}} 项
+  <div class="foot-bar text-small text-gray flex justify-center" v-if="number > 0">
+    共 {{ list.length }} 项
   </div>
+  <el-empty description="没有可分享的文件" v-if="list.length == 0" />
   <div class="tools flex align-center justify-between" :class="{ show: number > 0 }">
     <div class="text-gray">已选择 {{ number }} 项</div>
     <el-button type="danger">删除</el-button>
   </div>
-  <el-drawer v-model="info.show" :title="info.data.name" direction="btt"
-    :before-close="closeInfo">
+  <el-drawer v-model="info.show" :title="info.data.name" direction="btt" :before-close="closeInfo">
     <span>Hi, there!</span>
   </el-drawer>
 </template>
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       number: 0,
-      info:{
+      info: {
         show: false,
         data: {}
       }
@@ -56,7 +56,7 @@ export default {
       this.info.show = true;
       this.info.data = item;
     },
-    closeInfo(){
+    closeInfo() {
       this.info.show = false;
     },
     remove(path) {
@@ -186,12 +186,12 @@ export default {
   left: 1px;
 }
 
-.tools.show{
+.tools.show {
   bottom: 22px;
   opacity: 1;
 }
 
-.foot-bar{
+.foot-bar {
   padding-top: 10px;
   height: 35px;
   width: 100%;

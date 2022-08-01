@@ -24,21 +24,31 @@ import { sys } from './plugins/util';
 import AppHead from './components/app-head.vue';
 import TopBar from './components/top-bar.vue';
 import zhCn from 'element-plus/lib/locale/lang/zh-cn';
+import config from '../basic/plugins/config';
+import { confStore } from "./plugins/store";
 
 export default {
   name: "appMenu",
   components: { AppHead, TopBar },
+  setup(props) {
+    const conf = confStore();
+    return {
+      conf
+    }
+  },
   data() {
     return {
       locale: zhCn,
       system: 'other',
-      show: false
+      show: false,
+      conf: {}
     };
   },
   methods: {
     init() {
+      this.conf.init(config.getAll());
       setTimeout(() => {
-        this.show = true
+        this.show = true;
       }, 1500)
     }
   },

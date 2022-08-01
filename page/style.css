@@ -56,7 +56,7 @@ body {
   width: 100%;
 }
 
-.card{
+.card {
   background-color: var(--app-head-color);
   border-radius: 8px;
 }
@@ -103,7 +103,7 @@ body {
   color: #999;
 }
 
-.float-right{
+.float-right {
   float: right;
 }
 
@@ -119,11 +119,11 @@ body {
   margin-bottom: 10px;
 }
 
-.pa-10{
+.pa-10 {
   padding: 10px;
 }
 
-.pb-0{
+.pb-0 {
   padding-bottom: 0;
 }
 
@@ -141,7 +141,7 @@ body {
   width: 8px;
 }
 
-.line-1{
+.line-1 {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -155,7 +155,7 @@ body {
 
 
 
-.el-tabs{
+.el-tabs {
   border: 1px solid var(--app-head-border-color);
   background-color: var(--app-background-color);
   border-radius: 0 0 8px 8px;
@@ -193,10 +193,14 @@ body {
   background-color: var(--app-head-border-color) !important;
 }
 
-@keyframes loading-rotate{to{transform:rotate(360deg)}}
+@keyframes loading-rotate {
+  to {
+    transform: rotate(360deg)
+  }
+}
 
-.el-loading-mask{
-  background-color: rgba(0,0,0,.3) !important;
+.el-loading-mask {
+  background-color: rgba(0, 0, 0, .3) !important;
   border-radius: 8px;
 }
 
@@ -221,7 +225,7 @@ body {
   stroke-width: 5;
 }
 
-.el-message{
+.el-message {
   transition: all ease-out 0.3s;
   justify-content: center;
   top: 3px !important;
@@ -234,7 +238,7 @@ body {
   left: 18vw;
 }
 
-.el-message i{
+.el-message i {
   position: absolute;
   margin-right: 5px;
   font-size: 22px;
@@ -242,7 +246,7 @@ body {
   top: 0;
 }
 
-.el-message p{
+.el-message p {
   width: calc(64vw - 25px);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -252,53 +256,89 @@ body {
   overflow: hidden;
 }
 
-.el-message--success{
+.el-message--success {
   background-color: #529b2e;
 }
 
-.el-message--warning{
+.el-message--warning {
   background-color: #ff9900;
 }
 
-.el-message--error{
+.el-message--error {
   background-color: #c45656;
 }
 
-.el-message--info{
+.el-message--info {
   background-color: #235db9;
 }
 
 .el-message--success i,
-.el-message--info i{
+.el-message--info i {
   top: 2px;
 }
 
-.el-drawer{
+.el-drawer {
   background-color: var(--app-head-color) !important;
   border-radius: 10px 10px 8px 8px;
 }
 
-.el-drawer__header{
+.el-drawer__header {
   padding: 8px 10px 0 10px !important;
   margin-bottom: 0 !important;
 }
 
-.el-drawer__body{
+.el-drawer__body {
   padding: 10px !important;
 }
 
-.el-drawer__title{
+.el-drawer__title {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.el-overlay{
+.el-overlay {
   border-radius: 8px;
+}
+
+.el-switch {
+  --el-switch-on-color: #13ce66 !important;
+  --el-switch-off-color: #4e5052 !important;
+}
+
+.el-switch__action {
+  background-color: #232325 !important;
+}
+
+.el-empty {
+  --el-empty-padding: 120px 0 0 0 !important;
+  --el-empty-fill-color-0: #000000 !important;
+  --el-empty-fill-color-1: #4b4b52 !important;
+  --el-empty-fill-color-2: #36383d !important;
+  --el-empty-fill-color-3: #4b4b52 !important;
+  --el-empty-fill-color-4: #262629 !important;
+  --el-empty-fill-color-5: #202124 !important;
+  --el-empty-fill-color-6: #212224 !important;
+  --el-empty-fill-color-7: #1b1c1f !important;
+  --el-empty-fill-color-8: #1c1d1f !important;
+  --el-empty-fill-color-9: #18181a !important;
 }
 
 @media (prefers-color-scheme: light) {
   .el-tabs__item {
     color: #999999 !important;
+  }
+
+  .el-empty {
+    --el-empty-fill-color-0: #18181a !important;
+    --el-empty-fill-color-1: #f4f4f4 !important;
+    --el-empty-fill-color-2: #efefef !important;
+    --el-empty-fill-color-3: #f3f3f3 !important;
+    --el-empty-fill-color-4: #d9dbe0 !important;
+    --el-empty-fill-color-5: #f0f0f0 !important;
+    --el-empty-fill-color-6: #e9ebef !important;
+    --el-empty-fill-color-7: #e5e7e9 !important;
+    --el-empty-fill-color-8: #e0e3e9 !important;
+    --el-empty-fill-color-9: #d5d7de !important;
   }
 }
