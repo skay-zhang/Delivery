@@ -70,6 +70,23 @@ const share = {
         saveData(list);
         return '';
     },
+    removeList(paths) {
+        let list = share.getList();
+        if (list.length === 0) return '资源不存在';
+        let copyList = [];
+        for(let i in list){
+            let exist = false;
+            for(let x in paths){
+                if(paths[x] === list[i].path) {
+                    exist = true;
+                    break;
+                }
+            }
+            if(!exist) copyList.push(list[i]);
+        }
+        saveData(copyList);
+        return '';
+    },
     getIcon(list){
         for(let a in list){
             let file = list[a];

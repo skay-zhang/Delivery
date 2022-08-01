@@ -2,7 +2,7 @@
   <div>
     <el-scrollbar height="568px" noresize>
       <div class="pa-10 pb-0">
-        <share-item :list="list" />
+        <share-item ref="share" :list="list" @remove="remove" />
       </div>
       <div id="drop" class="flex align-center justify-center" v-show="drop">
         <div class="text-center">
@@ -63,6 +63,13 @@ export default {
       this.drop = false;
       this.list = share.addItem(e.dataTransfer.files);
     },
+    remove(e){
+      if(e.length == 1) share.removeItem(e[0]);
+      else share.removeList(e);
+      this.$message.success('删除成功');
+      this.$refs.share.cleanSelect();
+      this.getList();
+    }
   },
   mounted() {
     this.installDrop();

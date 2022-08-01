@@ -9,9 +9,10 @@ import fs from 'fs'
 let Server
 let conf = {};
 let Sockets = [];
+let configPath = path.join(app.getPath('userData'), 'config.conf');
 
 function getConfig(){
-    let data = fs.readFileSync(path.join(app.getPath('userData'), 'config.conf'), 'utf-8');
+    let data = fs.readFileSync(configPath, 'utf-8');
     return JSON.parse(data);
 }
 
@@ -19,6 +20,12 @@ const httpService = {
     port: 56565,
     state: false,
     start: () => {
+        if(!fs.existsSync(configPath)){
+            setTimeout(()=>{
+                httpService.start();
+            },500);
+            return;
+        }
         conf = getConfig();
         httpService.port = conf.network.port
         console.log('Service Init On Port ' + httpService.port)

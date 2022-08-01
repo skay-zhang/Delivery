@@ -6,7 +6,7 @@
       <img class="icon" :src="'./img/' + item.icon + '.png'" />
     </div>
     <div class="info">
-      <div class="size text-small float-right">{{ item.size }}</div>
+      <div class="size text-small float-right" v-if="item.type !== 'folder'">{{ item.size }}</div>
       <div class="title mb-5 line-1">{{ item.name }}</div>
       <div class="text-small text-gray line-1">{{ item.path }}</div>
     </div>
@@ -16,13 +16,13 @@
       </el-icon>
     </div>
   </div>
-  <div class="foot-bar text-small text-gray flex justify-center" v-if="number > 0">
+  <div class="foot-bar text-small text-gray flex justify-center" v-if="list.length > 0">
     共 {{ list.length }} 项
   </div>
   <el-empty description="没有可分享的文件" v-if="list.length == 0" />
   <div class="tools flex align-center justify-between" :class="{ show: number > 0 }">
     <div class="text-gray">已选择 {{ number }} 项</div>
-    <el-button type="danger">删除</el-button>
+    <el-button type="danger" @click="removeSelect">删除</el-button>
   </div>
   <el-drawer v-model="info.show" :title="info.data.name" direction="btt" :before-close="closeInfo">
     <span>Hi, there!</span>
@@ -34,6 +34,7 @@ import { Delete } from '@element-plus/icons-vue'
 export default {
   name: "shareItem",
   components: { Delete },
+  emits: ['remove'],
   props: {
     list: {
       type: Array,
@@ -59,16 +60,32 @@ export default {
     closeInfo() {
       this.info.show = false;
     },
-    remove(name, path) {
-      console.log('remove');
-      this.$confirm('确认要将`' + name + '`从分享服务中移除吗?', '移除分享', {
-        type: 'warning',
-        'confirm-button-text': '确认移除'
-      })
-    },
     selectItem(e) {
       if (e) this.number = this.number + 1;
       else this.number = this.number - 1;
+    },
+    cleanSelect(){
+      this.number = 0;
+    },
+    remove(name, path) {
+      this.$confirm('确认要将`' + name + '`从分享服务中移除吗?', '移除分享', {
+        type: 'warning',
+        'confirm-button-text': '确认移除'
+      }).then(() => {
+        this.$emit('remove', [path]);
+      })
+    },
+    removeSelect() {
+      this.$confirm('确认要将已选取的' + this.number + '个文件从分享服务中移除吗?', '移除分享', {
+        type: 'warning',
+        'confirm-button-text': '确认移除'
+      }).then(() => {
+        let removeList = [];
+        for (let i in this.list) {
+          if (this.list[i].select) removeList.push(this.list[i].path);
+        }
+        this.$emit('remove', removeList);
+      })
     }
   }
 };

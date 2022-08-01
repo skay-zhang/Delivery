@@ -24,13 +24,13 @@
       <el-icon class="btn-icon mr-5" style="transform: rotate(-45deg);">
         <Switch />
       </el-icon>
-      <div>
-        <div class="text-small flex align-center">
+      <div v-if="conf.service">
+        <div class="text-small flex align-center" v-if="conf.service.share">
           <div class="mr-5">分享:</div>
           <div :class="(conf.service.share.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;"></div>
           <div>已停用</div>
         </div>
-        <div class="text-small flex align-center">
+        <div class="text-small flex align-center" v-if="conf.service.receive">
           <div class="mr-5">接收:</div>
           <div :class="(conf.service.receive.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;"></div>
           <div>已启用</div>

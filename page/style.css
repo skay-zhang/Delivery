@@ -276,9 +276,17 @@ body {
   background-color: #235db9;
 }
 
+
+.el-message--success i{
+  padding-top: 1px;
+}
+
 .el-drawer {
   background-color: var(--app-head-color) !important;
+  width: calc(100vw - 2px) !important;
   border-radius: 10px 10px 8px 8px;
+  bottom: 1px !important;
+  left: 1px !important;
 }
 
 .el-drawer__header {
@@ -325,19 +333,75 @@ body {
 
 .el-overlay.is-message-box{
   height: 100vh;
-  width: 100vw;
 }
 
 .el-overlay-message-box{
+  bottom: 1px !important;
   padding: 0 !important;
+  left: 1px !important;
+  top: auto !important;
   height: max-content;
   width: max-content;
-  bottom: 0;
 }
 
 .el-message-box{
-  bottom: 0;
+  background-color: var(--app-head-color) !important;
+  border-radius: 10px 10px 8px 8px;
+  border: none;
+  width: 348px;
 }
+
+.el-message-box__title{
+  color: var(--app-text-color);
+}
+
+.el-message-box__content{
+  color: var(--app-head-text-color);
+}
+
+.el-button{
+  background-color: var(--app-menu-active-color) !important;
+  border-color: var(--app-menu-active-color) !important;
+}
+
+.el-button:hover{
+  border-color: var(--app-menu-hover-color) !important;
+  color: var(--app-text-color) !important;
+}
+
+.el-button:active{
+  background-color: var(--app-topbar-btn-hover-color) !important;
+}
+
+.el-button--primary{
+  background-color: var(--app-menu-active-border-color) !important;
+  border-color: var(--app-menu-active-border-color) !important;
+}
+
+.el-button--primary:hover{
+  border-color: #4b8df8 !important;
+  color: #f4f4f4 !important;
+}
+
+.el-button--primary:active{
+  background-color: #1b4fa3 !important;
+}
+
+.el-button--danger{
+  background-color: #c45656 !important;
+  border-color: #c45656 !important;
+}
+
+.el-button--danger:hover{
+  background-color: #dd4f4f !important;
+  border-color: #dd4f4f !important;
+  color: #f4f4f4 !important;
+}
+
+.el-button--danger:active{
+  background-color: #d13535 !important;
+}
+
 
 @media (prefers-color-scheme: light) {
   .el-tabs__item {
@@ -356,4 +420,14 @@ body {
     --el-empty-fill-color-8: #e0e3e9 !important;
     --el-empty-fill-color-9: #d5d7de !important;
   }
+
+  .el-switch {
+    --el-switch-on-color: #13ce66 !important;
+    --el-switch-off-color: #c4c4c4 !important;
+  }
+  
+  .el-switch__action {
+    background-color: #ffffff !important;
+  }
+  
 }

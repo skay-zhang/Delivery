@@ -22,7 +22,8 @@ let mime = {
     shell: ["sh"],
     url: ["url"],
     word: ["doc", "docx", "dot"],
-    zip: ["rar", "7z", "zip", "gz"]
+    zip: ["rar", "7z", "zip", "gz"],
+    folder: ["folder"]
 };
 
 export default mime;
