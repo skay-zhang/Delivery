@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     getList() {
-
+      // get list
     },
   },
   mounted() {

@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Tray, Menu, ipcMain, nativeTheme } from 'electron'
-import httpService from "./plugins/http"
+import httpService from "./plugins/http-service"
 import { release } from 'os'
 import { join } from 'path'
 
@@ -77,12 +77,12 @@ nativeTheme.on('updated', () => {
 })
 
 // 折叠窗口
-ipcMain.on('win-fold', (event, arg) => {
+ipcMain.on('win-fold', (_event, _arg) => {
   win.setSize(350, 103);
 })
 
 // 展开窗口
-ipcMain.on('win-open', (event, arg) => {
+ipcMain.on('win-open', (_event, _arg) => {
   win.setSize(350, 700);
 })
 
@@ -97,18 +97,18 @@ ipcMain.on('win-close', function () {
 })
 
 // 获取用户数据文件夹
-ipcMain.on('get-user-data', (event, arg) => {
+ipcMain.on('get-user-data', (event, _arg) => {
   event.returnValue = app.getPath('userData');
 })
 
 // 重启Http服务
-ipcMain.on('http-restart', (event, arg) => {
+ipcMain.on('http-restart', (_event, _arg) => {
   httpService.stop();
   setTimeout(()=> httpService.start(),1000);
 })
 
 // new window example arg: new windows url
-ipcMain.handle('open-win', (event, arg) => {
+ipcMain.handle('open-win', (_event, arg) => {
   const childWindow = new BrowserWindow({
     webPreferences: {
       preload,

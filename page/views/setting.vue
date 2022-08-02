@@ -46,7 +46,7 @@ import { win } from '../plugins/util';
 export default {
   name: 'setting',
   components: { ArrowLeftBold },
-  setup(props) {
+  setup(_props) {
     const conf = confStore();
     return {
       conf
@@ -81,7 +81,7 @@ export default {
   },
   watch: {
     '$route.query': {
-      handler(to, from) {
+      handler(to, _from) {
         this.switchTab(to.tab);
       },
       deep: true

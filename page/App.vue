@@ -30,7 +30,7 @@ import { confStore } from "./plugins/store";
 export default {
   name: "appMenu",
   components: { AppHead, TopBar },
-  setup(props) {
+  setup(_props) {
     const conf = confStore();
     return {
       conf

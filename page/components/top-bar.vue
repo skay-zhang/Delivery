@@ -47,7 +47,7 @@ import { confStore } from "../plugins/store";
 export default {
   name: "topBar",
   components: { Connection, Umbrella, Switch },
-  setup(props) {
+  setup(_props) {
     const conf = confStore();
     return {
       conf

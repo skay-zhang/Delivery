@@ -9,6 +9,7 @@ import os from 'os'
 import fs from 'fs'
 
 let Server
+let upload;
 let conf = {};
 let Sockets = [];
 let configPath = path.join(app.getPath('userData'), 'config.conf');
@@ -39,7 +40,7 @@ const httpService = {
         conf = getConfig();
         httpService.port = conf.network.port
         console.log('Service Init On Port ' + httpService.port)
-
+        initUpload();
         Server = http.createServer(initService()).listen(httpService.port, () => {
             console.log('Service Running')
             httpService.state = true
@@ -91,57 +92,62 @@ function getIp(txt) {
     else return txt.indexOf("::ffff:") === -1 ? txt : txt.replace("::ffff:", "")
 }
 
-function downFile(type, path, res) {
+function downFile(file, res) {
     let err = true
-    let state = fs.statSync(path, { throwIfNoEntry: false })
+    let state = fs.statSync(file.path, { throwIfNoEntry: false })
     if (state === undefined) return err;
-    if (type === 'folder') {
-        let state = fs.statSync(path + '.zip', { throwIfNoEntry: false })
+    if (file.type === 'folder') {
+        state = fs.statSync(file.path + '.zip', { throwIfNoEntry: false })
         if (state === undefined) {
-            outLog(`Folder '${path}' Compression...`)
-            let output = fs.createWriteStream(path + '.zip');
+            outLog(`Folder '${file.path}' Compression...`)
+            let output = fs.createWriteStream(file.path + '.zip');
             let archive = archiver('zip', {
                 zlib: { level: 9 }
             });
             archive.pipe(output);
-            archive.directory(path, false);
+            archive.directory(file.path, false);
             archive.finalize();
             archive.on("finish", function () {
-                state = fs.statSync(path + '.zip', { throwIfNoEntry: false })
+                state = fs.statSync(file.path + '.zip', { throwIfNoEntry: false })
                 if (state === undefined) {
                     res.setHeader("Content-Type", "application/json")
                     res.send({ state: false, message: '文件夹打包出错' })
                 }
-                else res.download(path + '.zip')
+                else res.download(file.path + '.zip')
             });
-        } else res.download(path + '.zip')
-        outLog('Download Folder ' + path)
+        } else res.download(file.path + '.zip')
+        outLog('Download Folder ' + file.path)
         err = false
     } else {
-        outLog('Download File ' + path)
-        res.download(path)
+        outLog('Download File ' + file.path)
+        res.download(file.path)
         err = false
     }
     return err;
 }
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, callback) => {
-            let downPath = path.join(app.getPath('downloads'), 'delivery/');
-            if (!fs.existsSync(downPath)) fs.mkdirSync(downPath);
-            callback(null, downPath);
-        },
-        filename: function (req, file, callback) {
-            callback(null, file.originalname)
+function initUpload(){
+    upload = multer({
+        storage: multer.diskStorage({
+            destination: (_req, _file, callback) => {
+                let downPath = path.join(app.getPath('downloads'), 'delivery/');
+                if (!fs.existsSync(downPath)) fs.mkdirSync(downPath);
+                callback(null, downPath);
+            },
+            filename: function (req, file, callback) {
+                callback(null, file.originalname)
+            }
+        }),
+        limits: {
+            fileSize: conf.service.receive.maxSize
         }
-    })
-});
+    });
+}
 
 function initService() {
     let serve = express()
     // 获取服务状态
-    serve.get('/api/state', (req, res) => {
+    serve.get('/api/state', (_req, res) => {
         let state = {
             share: conf.service.share.enable,
             receive: conf.service.receive.enable
@@ -150,7 +156,7 @@ function initService() {
         res.send({ state: true, data: state })
     });
     // 获取文件列表
-    serve.get('/api/list', (req, res) => {
+    serve.get('/api/list', (_req, res) => {
         let list = getShare();
         for (let i in list) {
             delete list[i].path;
@@ -168,7 +174,7 @@ function initService() {
             for (let i in list) {
                 let item = list[i];
                 if (item.code === code) {
-                    exist = downFile(item.type, item.path, res);
+                    exist = downFile(item, res);
                     break;
                 }
             }

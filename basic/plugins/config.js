@@ -12,7 +12,8 @@ function initConfig() {
                 enable: false
             },
             receive: {
-                enable: false
+                enable: false,
+                maxSize: 10000000
             }
         },
         network: {
