@@ -1,6 +1,8 @@
-import { app } from 'electron'
 import archiver from 'archiver'
+import { app } from 'electron'
 import express from 'express'
+import multer from 'multer'
+import util from './util'
 import http from 'http'
 import path from 'path'
 import os from 'os'
@@ -10,20 +12,28 @@ let Server
 let conf = {};
 let Sockets = [];
 let configPath = path.join(app.getPath('userData'), 'config.conf');
+let sharePath = path.join(app.getPath('userData'), 'Share List');
 
-function getConfig(){
+function getConfig() {
     let data = fs.readFileSync(configPath, 'utf-8');
     return JSON.parse(data);
+}
+
+function getShare() {
+    if (!fs.existsSync(sharePath)) return [];
+    let data = fs.readFileSync(sharePath, 'utf-8');
+    if (data) return util.getIcon(JSON.parse(data));
+    else return [];
 }
 
 const httpService = {
     port: 56565,
     state: false,
     start: () => {
-        if(!fs.existsSync(configPath)){
-            setTimeout(()=>{
+        if (!fs.existsSync(configPath)) {
+            setTimeout(() => {
                 httpService.start();
-            },500);
+            }, 500);
             return;
         }
         conf = getConfig();
@@ -54,7 +64,7 @@ const httpService = {
             Server = {}
         });
     },
-    getInfo(){
+    getInfo() {
         let list = []
         Sockets.forEach(function (socket) {
             list.push(getIp(socket.remoteAddress))
@@ -67,7 +77,7 @@ const httpService = {
                 if (!network.internal && network.family === 'IPv4') interfaces.push(network.address)
             });
         }
-        
+
         return {
             state: httpService.state,
             socket: Array.from(new Set(list)),
@@ -115,8 +125,22 @@ function downFile(type, path, res) {
     return err;
 }
 
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, callback) => {
+            let downPath = path.join(app.getPath('downloads'), 'delivery/');
+            if (!fs.existsSync(downPath)) fs.mkdirSync(downPath);
+            callback(null, downPath);
+        },
+        filename: function (req, file, callback) {
+            callback(null, file.originalname)
+        }
+    })
+});
+
 function initService() {
     let serve = express()
+    // 获取服务状态
     serve.get('/api/state', (req, res) => {
         let state = {
             share: conf.service.share.enable,
@@ -124,7 +148,43 @@ function initService() {
         }
         res.setHeader("Content-Type", "application/json")
         res.send({ state: true, data: state })
-    })
+    });
+    // 获取文件列表
+    serve.get('/api/list', (req, res) => {
+        let list = getShare();
+        for (let i in list) {
+            delete list[i].path;
+        }
+        res.setHeader("Content-Type", "application/json")
+        res.send({ state: true, data: list })
+    });
+    // 下载文件
+    serve.get('/api/down/*', (req, res) => {
+        let code = req.path.substring(10).split('/');
+        if (code.length != 32) return returnError('invalid file code')
+        else {
+            let exist = false;
+            let list = getShare();
+            for (let i in list) {
+                let item = list[i];
+                if (item.code === code) {
+                    exist = downFile(item.type, item.path, res);
+                    break;
+                }
+            }
+            if (!exist) return returnError('file does not exist')
+        }
+    });
+    // 上传文件
+    serve.post('/api/upload', upload.single('file'), (req, res) => {
+        res.setHeader("Content-Type", "application/json")
+        res.send({
+            state: true, data: {
+                name: req.file.originalname,
+                size: req.file.size
+            }
+        })
+    });
     serve.use(express.static(path.join(__dirname, app.isPackaged ? '../client' : '../../public/client')))
     return serve
 }

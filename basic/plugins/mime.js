@@ -23,6 +23,7 @@ let mime = {
     url: ["url"],
     word: ["doc", "docx", "dot"],
     zip: ["rar", "7z", "zip", "gz"],
+    setting: ["conf"],
     folder: ["folder"]
 };
 

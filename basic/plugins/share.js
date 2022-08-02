@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import { join } from 'path'
-import mime from './mime'
+import util from './util'
 import fs from 'fs'
 
 let sharePath = join(ipcRenderer.sendSync('get-user-data'), 'Share List');
@@ -25,7 +25,7 @@ const share = {
     getList() {
         if (!fs.existsSync(sharePath)) return initShare();
         let data = fs.readFileSync(sharePath, 'utf-8');
-        if (data) return share.getIcon(JSON.parse(data));
+        if (data) return util.getIcon(JSON.parse(data));
         else return initShare();
     },
     checkItem(list, path) {
@@ -40,10 +40,10 @@ const share = {
         for (let i = 0; i !== files.length; i++) {
             let file = files[i];
             if (share.checkItem(list, file.path)) continue;
-            list.push(buildFile(file))
+            list.push(util.buildFile(file))
         }
         saveData(list);
-        return share.getIcon(list);
+        return util.getIcon(list);
     },
     // 更新分享
     updateItem(index, info) {
@@ -74,55 +74,19 @@ const share = {
         let list = share.getList();
         if (list.length === 0) return '资源不存在';
         let copyList = [];
-        for(let i in list){
+        for (let i in list) {
             let exist = false;
-            for(let x in paths){
-                if(paths[x] === list[i].path) {
+            for (let x in paths) {
+                if (paths[x] === list[i].path) {
                     exist = true;
                     break;
                 }
             }
-            if(!exist) copyList.push(list[i]);
+            if (!exist) copyList.push(list[i]);
         }
         saveData(copyList);
         return '';
-    },
-    getIcon(list){
-        for(let a in list){
-            let file = list[a];
-            for(let key in mime){
-                for(let b in mime[key]){
-                    if(mime[key][b] == file.type) {
-                        file.icon = key;
-                        break;
-                    }
-                }
-            }
-            if(list[a].icon == undefined) list[a].icon =  'other';
-        }
-        return list;
     }
-}
-
-function buildFile(file) {
-    let type = 'folder';
-    let index = file.name.lastIndexOf(".");
-    if (index !== -1) type = file.name.substring(index + 1).toLowerCase()
-
-    return {
-        path: file.path,
-        name: file.name,
-        size: buildSize(file.size),
-        type
-    };
-}
-
-function buildSize(number) {
-    if (number >= 1073741824) return parseFloat(number / 1073741824).toFixed(2) + ' GB'
-    else if (number >= 1048576) return parseFloat(number / 1048576).toFixed(2) + ' MB'
-    else if (number >= 1024) return parseFloat(number / 1024).toFixed(2) + ' KB'
-    else return parseFloat(number / 1024).toFixed(2) + ' B'
-
 }
 
 export default share
