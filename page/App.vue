@@ -28,7 +28,7 @@ import config from '../basic/plugins/config';
 import { confStore } from "./plugins/store";
 
 export default {
-  name: "appMenu",
+  name: "App",
   components: { AppHead, TopBar },
   setup(_props) {
     const conf = confStore();
