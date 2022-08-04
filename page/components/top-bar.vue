@@ -28,12 +28,13 @@
         <div class="text-small flex align-center" v-if="conf.service.share">
           <div class="mr-5">分享:</div>
           <div :class="(conf.service.share.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;"></div>
-          <div>已停用</div>
+          <div>{{ conf.service.share.enable ? '已启用' : '已停用' }}</div>
         </div>
         <div class="text-small flex align-center" v-if="conf.service.receive">
           <div class="mr-5">接收:</div>
-          <div :class="(conf.service.receive.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;"></div>
-          <div>已启用</div>
+          <div :class="(conf.service.receive.enable ? 'dot-green' : 'dot-red') + ' mr-5'" style="margin-top: 2px;">
+          </div>
+          <div>{{ conf.service.receive.enable ? '已启用' : '已停用' }}</div>
         </div>
       </div>
     </div>

@@ -16,6 +16,10 @@
   --app-border-color: #414141;
   --app-menu-hover-color: #4e5052;
   --app-menu-active-color: #363738;
+  --app-disabled-color: #4e4e4e;
+  --app-card-color: #333333;
+  --app-card-hover-color: #3d3d3d;
+  --app-card-active-color: #2a2a2d;
 }
 
 .el-empty {
@@ -34,12 +38,15 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --app-background-color: #f4f4f4;
+    --app-background-color: #ffffff;
     --app-text-color: #213547;
     --app-title-color: #888888;
     --app-border-color: #dadada;
     --app-menu-hover-color: #e2e2e2;
     --app-menu-active-color: #d8d8d8;
+    --app-card-color: #f4f4f4;
+    --app-card-active-color: #d9dde2;
+    --app-card-hover-color: #e6e9ed;
   }
   
   .el-empty {
@@ -112,7 +119,20 @@ body {
   border-bottom: 1px var(--app-border-color) solid;
 }
 
+.mt-5{
+  margin-top: 5px;
+}
 
+.card {
+  background-color: var(--app-card-color);
+  border-radius: 8px;
+}
+
+.line-1 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 @keyframes loading-rotate {
   to {
