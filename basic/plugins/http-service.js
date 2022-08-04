@@ -1,3 +1,4 @@
+import pkg from '../../package.json'
 import archiver from 'archiver'
 import { app } from 'electron'
 import express from 'express'
@@ -126,7 +127,7 @@ function downFile(file, res) {
     return err;
 }
 
-function initUpload(){
+function initUpload() {
     upload = multer({
         storage: multer.diskStorage({
             destination: (_req, _file, callback) => {
@@ -146,14 +147,27 @@ function initUpload(){
 
 function initService() {
     let serve = express()
+    // 添加跨域
+    // 解决跨域问题
+    serve.all("*",  (req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'content-type');
+        res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+        if (req.method.toLowerCase() == 'options') res.send(200);
+        else next();
+    })
     // 获取服务状态
-    serve.get('/api/state', (_req, res) => {
+    serve.get('/api/init', (_req, res) => {
+        conf = getConfig();
         let state = {
             share: conf.service.share.enable,
             receive: conf.service.receive.enable
         }
         res.setHeader("Content-Type", "application/json")
-        res.send({ state: true, data: state })
+        res.send({ state: true, data: {
+            version: pkg.version,
+            state
+        } })
     });
     // 获取文件列表
     serve.get('/api/list', (_req, res) => {
