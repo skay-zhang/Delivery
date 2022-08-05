@@ -120,7 +120,6 @@ function downFile(file, res) {
     } else {
         console.log('Download File ' + file.path)
         res.download(file.path)
-        err = true
     }
     return err;
 }
@@ -133,7 +132,7 @@ function initUpload() {
                 if (!fs.existsSync(downPath)) fs.mkdirSync(downPath);
                 callback(null, downPath);
             },
-            filename: function (req, file, callback) {
+            filename: (_req, file, callback) => {
                 callback(null, file.originalname)
             }
         }),
@@ -146,7 +145,6 @@ function initUpload() {
 function initService() {
     let serve = express()
     // 添加跨域
-    // 解决跨域问题
     serve.all("*", (req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'content-type');

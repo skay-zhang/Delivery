@@ -54,7 +54,7 @@ function withDebug(config) {
     config.build.sourcemap = true
     config.plugins = (config.plugins || []).concat({
       name: 'electron-vite-debug',
-      configResolved(config) {
+      configResolved() {
         const index = config.plugins.findIndex(p => p.name === 'electron-main-watcher');
         (config.plugins).splice(index, 1)
       },

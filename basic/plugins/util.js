@@ -45,7 +45,7 @@ const util = {
             if (file.icon == undefined) {
                 file = getOtherIcon(file);
                 if (file.icon == undefined) file.icon = 'other';
-            } else if (file.icon == 'folder') file = getOtherIcon(file);
+            } else if (file.icon == 'folder') getOtherIcon(file);
         }
         return list;
     },
@@ -64,7 +64,7 @@ const util = {
         if (/(y+)/.test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substring(4 - RegExp.$1.length))
         }
-        for (var k in o) {
+        for (let k in o) {
             if (new RegExp('(' + k + ')').test(fmt)) {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substring(('' + o[k]).length)))
             }

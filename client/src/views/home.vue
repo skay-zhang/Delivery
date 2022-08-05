@@ -77,7 +77,7 @@ export default {
     addDownload(file) {
       api.download(file.code).then(res => {
         if (res.size < 50) {
-          var reader = new FileReader();
+          let reader = new FileReader();
           reader.readAsText(res, 'utf8');
           reader.onload = (e) => {
             let data = JSON.parse(e.target.result);
@@ -85,7 +85,7 @@ export default {
           }
         } else {
           let url = URL.createObjectURL(res);
-          var a = document.createElement("a");
+          let a = document.createElement("a");
           a.download = `${file.name}`;
           a.style.display = "none";
           a.href = url;
