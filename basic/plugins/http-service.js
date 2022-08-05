@@ -100,7 +100,6 @@ function downFile(file, res) {
     if (file.type === 'folder') {
         state = fs.statSync(file.path + '.zip', { throwIfNoEntry: false })
         if (state === undefined) {
-            outLog(`Folder '${file.path}' Compression...`)
             let output = fs.createWriteStream(file.path + '.zip');
             let archive = archiver('zip', {
                 zlib: { level: 9 }
@@ -117,12 +116,11 @@ function downFile(file, res) {
                 else res.download(file.path + '.zip')
             });
         } else res.download(file.path + '.zip')
-        outLog('Download Folder ' + file.path)
         err = false
     } else {
-        outLog('Download File ' + file.path)
+        console.log('Download File ' + file.path)
         res.download(file.path)
-        err = false
+        err = true
     }
     return err;
 }
@@ -149,7 +147,7 @@ function initService() {
     let serve = express()
     // 添加跨域
     // 解决跨域问题
-    serve.all("*",  (req, res, next) => {
+    serve.all("*", (req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'content-type');
         res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
@@ -164,10 +162,12 @@ function initService() {
             receive: conf.service.receive.enable
         }
         res.setHeader("Content-Type", "application/json")
-        res.send({ state: true, data: {
-            version: pkg.version,
-            state
-        } })
+        res.send({
+            state: true, data: {
+                version: pkg.version,
+                state
+            }
+        })
     });
     // 获取文件列表
     serve.get('/api/list', (_req, res) => {
@@ -181,18 +181,19 @@ function initService() {
     // 下载文件
     serve.get('/api/down/*', (req, res) => {
         let code = req.path.substring(10).split('/');
-        if (code.length != 32) return returnError('invalid file code')
+        if (!conf.service.share.enable) return returnError('share service unavailable', res)
+        if (code.length !== 1 || code[0].length != 32) return returnError('invalid file code', res)
         else {
             let exist = false;
             let list = getShare();
             for (let i in list) {
                 let item = list[i];
-                if (item.code === code) {
+                if (item.code === code[0]) {
                     exist = downFile(item, res);
                     break;
                 }
             }
-            if (!exist) return returnError('file does not exist')
+            if (!exist) return returnError('file does not exist', res)
         }
     });
     // 上传文件

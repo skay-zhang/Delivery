@@ -9,13 +9,15 @@
   <div v-show="!loading">
     <el-config-provider :locale="locale">
       <router-view v-slot="{ Component }">
-        <keep-alive>
-          <transition name="el-fade-in-linear">
-            <component :is="Component" />
-          </transition>
-        </keep-alive>
+        <transition name="el-fade-in-linear" mode="out-in">
+          <component :is="Component" />
+        </transition>
       </router-view>
     </el-config-provider>
+    <div class="copyright text-center text-gray text-small full-width">
+      <div>Released under the MIT License. ( v {{version}} )</div>
+      <div>Copyright © 2022-present Skay Zhang & Delivery Contributors</div>
+    </div>
   </div>
 </template>
 
@@ -28,7 +30,8 @@ export default {
   data() {
     return {
       locale: zhCn,
-      loading: true
+      loading: true,
+      version: '1.0.0',
     };
   },
   methods: {
@@ -36,11 +39,8 @@ export default {
       api.init().then(res => {
         if (res.state) {
           localStorage.setItem('app:state', JSON.stringify(res.data.state));
-          localStorage.setItem('app:version', res.data.version);
-        } else {
-          localStorage.setItem('app:state', '{"share":false,"receive":false}');
-          localStorage.setItem('app:version', '1.0.0');
-        }
+          this.version = res.data.version;
+        } else localStorage.setItem('app:state', '{"share":false,"receive":false}');
         this.$router.push('/home');
         setTimeout(() => {
           this.loading = false;

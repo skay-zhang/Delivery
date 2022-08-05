@@ -107,8 +107,16 @@ body {
   text-align: center;
 }
 
+.text-right{
+  text-align: right;
+}
+
 .text-gray {
   color: #999;
+}
+
+.float-left {
+  float: left;
 }
 
 .float-right {
@@ -123,6 +131,14 @@ body {
   margin-top: 5px;
 }
 
+.mr-5{
+  margin-right: 5px;
+}
+
+.ml-5{
+  margin-left: 5px;
+}
+
 .card {
   background-color: var(--app-card-color);
   border-radius: 8px;
@@ -132,6 +148,14 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.container{
+  min-height: calc(100vh - 40px);
 }
 
 @keyframes loading-rotate {

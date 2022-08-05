@@ -41,7 +41,7 @@ request.interceptors.response.use(
 
 function getPath() {
     let location = window.location;
-    return location.protocol + '//' + location.host + (location.port === '' ? '' : ':' + location.port) + '/api';
+    return location.protocol + '//' + location.host + '/api';
 }
 
 export default request
