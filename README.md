@@ -49,6 +49,7 @@ yarn run app:dev
 
 * [X] Basic UI: Includes only transfer-related screens
 * [X] HTTP Service: for LAN transmission
+* [ ] Web Client: HTTP service client
 * [ ] WebRTC Service: for WAN transmission
 * [ ] P2P ICE: for transmission without public IP
 * [ ] Advanced UI: Refine all interfaces
