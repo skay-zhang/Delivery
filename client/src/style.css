@@ -9,7 +9,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
+  
   --app-background-color: #242424;
   --app-text-color: #f4f4f4;
   --app-title-color: #95a7b9;
@@ -20,6 +20,7 @@
   --app-card-color: #333333;
   --app-card-hover-color: #3d3d3d;
   --app-card-active-color: #2a2a2d;
+  --app-mask-color: rgba(0, 0, 0, .7);
 }
 
 .el-empty {
@@ -47,6 +48,7 @@
     --app-card-color: #f4f4f4;
     --app-card-active-color: #d9dde2;
     --app-card-hover-color: #e6e9ed;
+    --app-mask-color: rgba(255, 255, 255, .7);
   }
   
   .el-empty {
@@ -137,6 +139,10 @@ body {
 
 .ml-5{
   margin-left: 5px;
+}
+
+.mb-5{
+  margin-bottom: 5px;
 }
 
 .card {

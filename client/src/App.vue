@@ -14,7 +14,7 @@
         </transition>
       </router-view>
     </el-config-provider>
-    <div class="copyright text-center text-gray text-small full-width">
+    <div class="copyright text-center text-gray text-small full-width mb-5">
       <div>Released under the MIT License. ( v {{version}} )</div>
       <div>Copyright © 2022-present Skay Zhang & Delivery Contributors</div>
     </div>
