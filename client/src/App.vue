@@ -7,15 +7,17 @@
     </div>
   </div>
   <div v-show="!loading">
-    <el-config-provider :locale="locale">
-      <router-view v-slot="{ Component }">
-        <transition name="el-fade-in-linear" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </el-config-provider>
-    <div class="copyright text-center text-gray text-small full-width mb-5">
-      <div>Released under the MIT License. ( v {{version}} )</div>
+    <el-scrollbar height="calc(100vh - 50px)">
+      <el-config-provider :locale="locale">
+        <router-view v-slot="{ Component }">
+          <transition name="el-fade-in-linear" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </el-config-provider>
+    </el-scrollbar>
+    <div class="copyright text-center text-gray text-small full-width">
+      <div>Released under the MIT License. ( v {{ version }} )</div>
       <div>Copyright © 2022-present Skay Zhang & Delivery Contributors</div>
     </div>
   </div>
@@ -47,6 +49,10 @@ export default {
         }, 500);
       }).catch(() => {
         // 无法连接服务器
+        this.$router.push('/auth');
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
       });
     },
   },
@@ -55,3 +61,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.copyright {
+  margin: 10px 0;
+}
+</style>

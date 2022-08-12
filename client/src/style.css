@@ -145,6 +145,10 @@ body {
   margin-bottom: 5px;
 }
 
+.mt-15{
+  margin-top: 15px;
+}
+
 .card {
   background-color: var(--app-card-color);
   border-radius: 8px;
@@ -161,7 +165,7 @@ body {
 }
 
 .container{
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh - 60px);
 }
 
 @keyframes loading-rotate {

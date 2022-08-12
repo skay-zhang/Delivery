@@ -1,37 +1,72 @@
 <template>
-  <div class="file-list" v-if="list.length > 0">
-    <div class="file-box" v-for="item in list" :key="item.code" @click="addDownload(item)">
-      <div class="file-item">
-        <el-progress v-if="item.progress" class="file-progress" :stroke-width="4" :width="60"
-          :status="item.progress == 100 ? 'success' : 'warning'" type="circle" :percentage="item.progress">
-          <template #default="{ percentage }">
-            <span class="text-small">{{ percentage }}%</span>
-          </template>
-        </el-progress>
-        <img class="file-icon card" :src="'./img/' + item.icon + '.png'" alt="icon" />
-        <div class="file-title line-1">{{ item.name }}</div>
-        <div class="text-small text-center text-gray">{{ item.size }}</div>
+  <template v-if="list.length > 0">
+    <template v-if="mode === 'tile'">
+      <share-list :list="list" />
+    </template>
+    <div class="mt-15" v-else-if="mode === 'classify'">
+      <div v-for="(group, index) in list" :key="index">
+        <div class="group-title">{{ type[group.name] }}</div>
+        <share-list :list="group.list" />
       </div>
     </div>
-  </div>
+  </template>
   <div class="flex align-center justify-center" v-else style="height: calc(100vh - 240px);">
     <el-empty description="没有分享的文件" />
   </div>
 </template>
 
 <script>
-import { p } from '@antfu/utils';
+import ShareList from './share-list.vue'
 import api from '../plugins/api'
 
 export default {
   name: "shareBlock",
+  components: { ShareList },
   props: {
     list: {
       type: Array,
       default: () => {
         return [];
       }
+    },
+    mode: {
+      type: String,
+      default: 'tile' // tile or classify
     }
+  },
+  data() {
+    return {
+      type: {
+        apk: 'Android 安装包',
+        ipa: 'iOS 安装包',
+        assembly: '二进制',
+        audio: '音频',
+        css: '层叠样式表',
+        database: '数据库',
+        docker: 'Docker',
+        document: '文本',
+        word: '文档',
+        excel: '表格',
+        ppt: '演示文稿',
+        exe: 'Windows 应用程序',
+        folder: '文件夹',
+        font: '字体',
+        html: 'HTML',
+        ico: '图标',
+        image: '图片',
+        iso: '光盘镜像',
+        java: 'Java',
+        python: 'Python',
+        javascript: 'JavaScript',
+        json: 'JSON',
+        markdown: 'Markdown',
+        pdf: 'PDF',
+        zip: '压缩包',
+        shell: '脚本',
+        url: '快捷方式',
+        other: '其他'
+      }
+    };
   },
   methods: {
     addDownload(file) {
@@ -79,88 +114,9 @@ export default {
 </script>
 
 <style scoped>
-.file-list {
-  box-sizing: border-box;
-  position: relative;
-  padding: 20px 0;
-  flex-wrap: wrap;
-  display: flex;
-  width: 100%;
-}
-
-.file-item {
-  margin: 0 auto 10px auto;
-  text-align: center;
-  position: relative;
-  cursor: pointer;
-}
-
-.file-icon {
-  transition: all ease-out 0.3s;
-  margin-bottom: 5px;
-  padding: 10px;
-  height: 50px;
-  width: 50px;
-}
-
-.file-title {
-  margin-bottom: 5px;
-  line-height: 16px;
-  font-size: 14px;
-}
-
-.file-item:hover .file-icon {
-  background-color: var(--app-card-hover-color);
-}
-
-.file-item:active .file-icon {
-  background-color: var(--app-card-active-color);
-}
-
-.file-box {
-  max-width: 10%;
-  flex: 0 0 10%;
-}
-
-.file-progress {
-  background-color: var(--app-mask-color);
-  padding: 5px;
-  border-radius: 8px;
-  position: absolute;
-  height: 60px;
-  width: 60px;
-}
-
-.file-progress .text-small {
-  color: var(--app-text-color);
-}
-
-@media only screen and (max-width: 768px) {
-  .file-box {
-    max-width: 12.5% !important;
-    flex: 0 0 12.5% !important;
-  }
-}
-
-@media only screen and (max-width: 650px) {
-  .file-box {
-    max-width: 16.5% !important;
-    flex: 0 0 16.5% !important;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  .file-box {
-    max-width: 20% !important;
-    flex: 0 0 20% !important;
-  }
-}
-
-
-@media only screen and (max-width: 375px) {
-  .file-box {
-    max-width: 25% !important;
-    flex: 0 0 25% !important;
-  }
+.group-title {
+  border-left: 5px solid var(--app-title-color);
+  padding-left: 10px;
+  font-size: 18px;
 }
 </style>

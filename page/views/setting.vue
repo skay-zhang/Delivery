@@ -11,11 +11,11 @@
         <!-- HTTP服务、WebRTC服务、P2P服务 -->
         <div class="flex align-center justify-between" v-if="conf.service.share">
           <div class="label">分享服务</div>
-          <el-switch v-model="conf.service.share.enable" @change="(e)=>change('service',e)" />
+          <el-switch v-model="conf.service.share.enable" @change="(e) => change('service', e)" />
         </div>
         <div class="flex align-center justify-between" v-if="conf.service.receive">
           <div class="label">接收服务</div>
-          <el-switch v-model="conf.service.receive.enable" @change="(e)=>change('service',e)" />
+          <el-switch v-model="conf.service.receive.enable" @change="(e) => change('service', e)" />
         </div>
       </div>
     </el-tab-pane>
@@ -68,8 +68,8 @@ export default {
     switchTab(tab) {
       if (tab) this.active = tab;
     },
-    change(module){
-      config.update(module,this.conf[module])
+    change(module) {
+      config.update(module, this.conf[module])
     },
     back() {
       this.$router.push('/home');
@@ -77,7 +77,7 @@ export default {
   },
   mounted() {
     win.open();
-    this.init();
+    setTimeout(() => this.init(), 500)
   },
   watch: {
     '$route.query': {
