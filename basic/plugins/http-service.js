@@ -146,9 +146,10 @@ function initService() {
     let serve = express()
     // 添加跨域
     serve.all("*", (req, res, next) => {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'content-type');
-        res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+        // 开发调试时开启
+        // res.header('Access-Control-Allow-Origin', '*');
+        // res.header('Access-Control-Allow-Headers', 'content-type');
+        // res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
         if (req.method.toLowerCase() == 'options') res.send(200);
         else next();
     })
