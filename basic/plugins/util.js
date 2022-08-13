@@ -30,23 +30,25 @@ const util = {
         else if (number >= 1024) return parseFloat(number / 1024).toFixed(2) + ' KB'
         else return parseFloat(number / 1024).toFixed(2) + ' B'
     },
-    getIcon(list) {
+    getIcons(list) {
         for (let a in list) {
-            let file = list[a];
-            for (let key in mime) {
-                for (let b in mime[key]) {
-                    if (mime[key][b] == file.type) {
-                        file.icon = key;
-                        break;
-                    }
-                }
-            }
-            if (file.icon == undefined) {
-                file = getOtherIcon(file);
-                if (file.icon == undefined) file.icon = 'other';
-            } else if (file.icon == 'folder') getOtherIcon(file);
+            util.getIcon(list[a])
         }
         return list;
+    },
+    getIcon(file) {
+        for (let key in mime) {
+            for (let b in mime[key]) {
+                if (mime[key][b] == file.type) {
+                    file.icon = key;
+                    break;
+                }
+            }
+        }
+        if (file.icon == undefined) {
+            file = getOtherIcon(file);
+            if (file.icon == undefined) file.icon = 'other';
+        } else if (file.icon == 'folder') getOtherIcon(file);
     },
     formatDate(timestamp, fmt = 'yyyy-MM-dd hh:mm:ss') {
         let date = new Date();

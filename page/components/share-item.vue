@@ -19,7 +19,7 @@
   <div class="foot-bar text-small text-gray flex justify-center" v-if="list.length > 0">
     共 {{ list.length }} 项
   </div>
-  <el-empty description="没有可分享的文件" v-if="list.length == 0" />
+  <el-empty description="没有可分享的文件" v-else />
   <div class="tools flex align-center justify-between" :class="{ show: number > 0 }">
     <div class="text-gray">已选择 {{ number }} 项</div>
     <el-button type="danger" @click="removeSelect">删除</el-button>

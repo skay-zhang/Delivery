@@ -25,7 +25,7 @@ const share = {
     getList() {
         if (!fs.existsSync(sharePath)) return initShare();
         let data = fs.readFileSync(sharePath, 'utf-8');
-        if (data) return util.getIcon(JSON.parse(data));
+        if (data) return util.getIcons(JSON.parse(data));
         else return initShare();
     },
     checkItem(list, path) {
@@ -43,7 +43,7 @@ const share = {
             list.push(util.buildFile(file))
         }
         saveData(list);
-        return util.getIcon(list);
+        return util.getIcons(list);
     },
     // 更新分享
     updateItem(index, info) {

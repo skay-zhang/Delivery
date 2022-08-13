@@ -65,7 +65,7 @@ app.on('activate', () => {
 app.on('ready', async () => {
   initMenu();
   createWindow();
-  setTimeout(()=> httpService.start(),1000);
+  setTimeout(()=> httpService.start(receiveCallback),1000);
 })
 
 // 监控主题变化
@@ -101,10 +101,15 @@ ipcMain.on('get-user-data', (event, _arg) => {
   event.returnValue = app.getPath('userData');
 })
 
+// 获取用户下载文件夹
+ipcMain.on('get-download', (event, _arg) => {
+  event.returnValue = app.getPath('downloads');
+})
+
 // 重启Http服务
 ipcMain.on('http-restart', (_event, _arg) => {
   httpService.stop();
-  setTimeout(()=> httpService.start(),1000);
+  setTimeout(()=> httpService.start(receiveCallback),1000);
 })
 
 // new window example arg: new windows url
@@ -122,7 +127,6 @@ ipcMain.handle('open-win', (_event, arg) => {
     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
 })
-
 
 function initMenu() {
   let isDark = nativeTheme.shouldUseDarkColors;
@@ -160,4 +164,8 @@ function initMenu() {
   tray.on('click', () => {
     tray.popUpContextMenu();
   })
+}
+
+function receiveCallback(file){
+  win.webContents.send('receive-callback', file)
 }

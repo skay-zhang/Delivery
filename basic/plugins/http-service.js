@@ -1,6 +1,6 @@
+import { app, ipcMain } from 'electron'
 import pkg from '../../package.json'
 import archiver from 'archiver'
-import { app } from 'electron'
 import express from 'express'
 import multer from 'multer'
 import util from './util'
@@ -13,6 +13,7 @@ let Server
 let upload;
 let conf = {};
 let Sockets = [];
+let Callback;
 let configPath = path.join(app.getPath('userData'), 'config.conf');
 let sharePath = path.join(app.getPath('userData'), 'Share List');
 
@@ -24,14 +25,14 @@ function getConfig() {
 function getShare() {
     if (!fs.existsSync(sharePath)) return [];
     let data = fs.readFileSync(sharePath, 'utf-8');
-    if (data) return util.getIcon(JSON.parse(data));
+    if (data) return util.getIcons(JSON.parse(data));
     else return [];
 }
 
 const httpService = {
     port: 56565,
     state: false,
-    start: () => {
+    start: (callback) => {
         if (!fs.existsSync(configPath)) {
             setTimeout(() => {
                 httpService.start();
@@ -39,6 +40,7 @@ const httpService = {
             return;
         }
         conf = getConfig();
+        Callback = callback;
         httpService.port = conf.network.port
         console.log('Service Init On Port ' + httpService.port)
         initUpload();
@@ -110,7 +112,7 @@ function downFile(file, res) {
             archive.on("finish", function () {
                 state = fs.statSync(file.path + '.zip', { throwIfNoEntry: false })
                 if (state === undefined) {
-                    res.setHeader("Content-Type", "application/json")
+                    res.setHeader("Content-Type", "application/json;charset=UTF-8")
                     res.send({ state: false, message: '文件夹打包出错' })
                 }
                 else res.download(file.path + '.zip')
@@ -160,7 +162,7 @@ function initService() {
             share: conf.service.share.enable,
             receive: conf.service.receive.enable
         }
-        res.setHeader("Content-Type", "application/json")
+        res.setHeader("Content-Type", "application/json;charset=UTF-8")
         res.send({
             state: true, data: {
                 version: pkg.version,
@@ -174,7 +176,7 @@ function initService() {
         for (let i in list) {
             delete list[i].path;
         }
-        res.setHeader("Content-Type", "application/json")
+        res.setHeader("Content-Type", "application/json;charset=UTF-8")
         res.send({ state: true, data: list })
     });
     // 下载文件
@@ -197,12 +199,22 @@ function initService() {
     });
     // 上传文件
     serve.post('/api/upload', upload.single('file'), (req, res) => {
-        res.setHeader("Content-Type", "application/json")
+        let data = {
+            name: decodeURIComponent(req.file.originalname),
+            size: util.buildSize(req.file.size),
+            date: new Date()
+        };
+
+        data.type = 'folder';
+        let index = data.name.lastIndexOf(".");
+        if (index !== -1) data.type = data.name.substring(index + 1).toLowerCase()
+
+        util.getIcon(data);
+
+        Callback(data)
+        res.setHeader('Content-Type', 'application/json;charset=UTF-8')
         res.send({
-            state: true, data: {
-                name: req.file.originalname,
-                size: req.file.size
-            }
+            state: true, data
         })
     });
     serve.use(express.static(path.join(__dirname, app.isPackaged ? '../client' : '../../public/client')))
@@ -210,7 +222,7 @@ function initService() {
 }
 
 function returnError(msg, res) {
-    res.setHeader("Content-Type", "application/json")
+    res.setHeader("Content-Type", "application/json;charset=UTF-8")
     res.send({ state: false, message: msg })
     return false
 }
