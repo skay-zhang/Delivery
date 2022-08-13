@@ -5,8 +5,14 @@ import fs from 'fs'
 
 let receivePath = join(ipcRenderer.sendSync('get-download'), 'delivery/');
 
+function initReceive() {
+  if (!fs.existsSync(receivePath)) 
+  fs.mkdirSync(receivePath)
+}
+
 const receive = {
   getList(list) {
+    initReceive();
     const dirs = fs.readdirSync(receivePath);
     for (let i in dirs) {
       let name = dirs[i];
