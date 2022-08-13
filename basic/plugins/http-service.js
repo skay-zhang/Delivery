@@ -1,7 +1,6 @@
 import pkg from '../../package.json'
 import archiver from 'archiver'
 import { app } from 'electron'
-import iconv from 'iconv-lite'
 import express from 'express'
 import multer from 'multer'
 import util from './util'
