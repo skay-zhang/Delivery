@@ -147,9 +147,9 @@ function initService() {
     // 添加跨域
     serve.all("*", (req, res, next) => {
         // 开发调试时开启
-        // res.header('Access-Control-Allow-Origin', '*');
-        // res.header('Access-Control-Allow-Headers', 'content-type');
-        // res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'content-type');
+        res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
         if (req.method.toLowerCase() == 'options') res.send(200);
         else next();
     })

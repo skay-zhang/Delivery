@@ -3,8 +3,8 @@ import { ElMessage } from 'element-plus'
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-// let path = getPath();
-let path = 'http://127.0.0.1:56565/api';
+let path = getPath();
+// let path = 'http://127.0.0.1:56565/api';
 
 const request = axios.create({
     baseURL: path,

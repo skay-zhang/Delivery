@@ -6,7 +6,7 @@
         <span>Client</span>
       </div>
       <div class="menu flex align-center">
-        <div class="menu-item flex align-center" :class="{ available: state.receive }">
+        <div class="menu-item flex align-center" :class="{ available: state.receive }" @click="openUpload">
           <el-icon size="28px" class="mr-5">
             <UploadFilled />
           </el-icon>
@@ -29,6 +29,7 @@ import { UploadFilled, UserFilled } from '@element-plus/icons-vue'
 export default {
   name: "appHeader",
   components: { UploadFilled, UserFilled },
+  emits: ['upload'],
   props: {
     state: {
       type: Object,
@@ -38,7 +39,10 @@ export default {
     }
   },
   methods: {
-
+    openUpload() {
+      if(!this.state.receive) return;
+      this.$emit('upload', {});
+    }
   }
 };
 </script>

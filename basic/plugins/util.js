@@ -29,7 +29,6 @@ const util = {
         else if (number >= 1048576) return parseFloat(number / 1048576).toFixed(2) + ' MB'
         else if (number >= 1024) return parseFloat(number / 1024).toFixed(2) + ' KB'
         else return parseFloat(number / 1024).toFixed(2) + ' B'
-
     },
     getIcon(list) {
         for (let a in list) {

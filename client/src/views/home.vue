@@ -1,15 +1,10 @@
 <template>
-  <app-header :state="state" />
+  <app-header :state="state" @upload="openDrawer()" />
   <el-scrollbar height="calc(100vh - 100px)">
     <div class="content mb-5">
       <template v-if="state.share">
         <share-block :list="list" :mode="mode" />
         <div class="tool">
-          <div class="tool-item">
-            <el-icon>
-              <Download />
-            </el-icon>
-          </div>
           <div class="tool-item" :class="{ loading }" @click="getList">
             <el-icon>
               <Refresh />
@@ -35,17 +30,19 @@
       </div>
     </div>
   </el-scrollbar>
+  <receive-block ref="receive" />
 </template>
 
 <script>
 import { UploadFilled, UserFilled, RemoveFilled, Download, Refresh, Tickets, Memo } from '@element-plus/icons-vue'
+import ReceiveBlock from '../components/receive-block.vue'
 import ShareBlock from '../components/share-block.vue'
 import AppHeader from '../components/app-header.vue'
 import api from '../plugins/api'
 
 export default {
   name: "Home",
-  components: { UploadFilled, UserFilled, RemoveFilled, Download, Refresh, Tickets, Memo, AppHeader, ShareBlock },
+  components: { UploadFilled, UserFilled, RemoveFilled, Download, Refresh, Tickets, Memo, AppHeader, ReceiveBlock, ShareBlock },
   data() {
     return {
       loading: false,
@@ -107,13 +104,19 @@ export default {
       this.mode = this.mode === 'classify' ? 'tile' : 'classify';
       localStorage.setItem('cache:share:mode', this.mode);
       this.getList();
-    }
+    },
+    openDrawer() {
+      this.$refs.receive.open();
+    },
   },
   mounted() {
+    // 初始化分享模式
     let mode = localStorage.getItem('cache:share:mode');
     if (mode) this.mode = mode;
+    // 初始化系统状态
     let state = localStorage.getItem('app:state');
     if (state) this.state = JSON.parse(state);
+    // 加载分享列表
     if (this.state.share) this.getList();
   }
 }
@@ -132,7 +135,7 @@ export default {
 
 .tool {
   background-color: var(--app-card-active-color);
-  top: calc(50vh - 148px);
+  top: calc(50vh - 70px);
   padding: 5px 5px 0 5px;
   border-radius: 6px;
   position: fixed;
@@ -140,7 +143,7 @@ export default {
 }
 
 .tool-item {
-  background-color: var(--app-menu-active-color);
+  background-color: var(--app-card-color);
   transition: all ease-out 0.3s;
   justify-content: center;
   align-items: center;
@@ -154,7 +157,7 @@ export default {
 }
 
 .tool-item:hover {
-  background-color: var(--app-card-color);
+  background-color: var(--app-menu-active-color);
 }
 
 .tool-item:active {
