@@ -199,23 +199,25 @@ function initService() {
     });
     // 上传文件
     serve.post('/api/upload', upload.single('file'), (req, res) => {
-        let data = {
-            name: decodeURIComponent(req.file.originalname),
-            size: util.buildSize(req.file.size),
-            date: new Date()
-        };
-
-        data.type = 'folder';
-        let index = data.name.lastIndexOf(".");
-        if (index !== -1) data.type = data.name.substring(index + 1).toLowerCase()
-
-        util.getIcon(data);
-
-        Callback(data)
-        res.setHeader('Content-Type', 'application/json;charset=UTF-8')
-        res.send({
-            state: true, data
-        })
+        if(req.file){
+            let data = {
+                name: decodeURIComponent(req.file.originalname),
+                size: util.buildSize(req.file.size),
+                date: new Date()
+            };
+    
+            data.type = 'folder';
+            let index = data.name.lastIndexOf(".");
+            if (index !== -1) data.type = data.name.substring(index + 1).toLowerCase()
+    
+            util.getIcon(data);
+    
+            Callback(data)
+            res.setHeader('Content-Type', 'application/json;charset=UTF-8')
+            res.send({
+                state: true, data
+            })
+        }else returnError('not file',res)
     });
     serve.use(express.static(path.join(__dirname, app.isPackaged ? '../client' : '../../public/client')))
     return serve
