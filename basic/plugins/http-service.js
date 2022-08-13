@@ -1,6 +1,7 @@
 import pkg from '../../package.json'
 import archiver from 'archiver'
 import { app } from 'electron'
+import iconv from 'iconv-lite'
 import express from 'express'
 import multer from 'multer'
 import util from './util'
@@ -133,7 +134,7 @@ function initUpload() {
                 callback(null, downPath);
             },
             filename: (_req, file, callback) => {
-                callback(null, file.originalname)
+                callback(null, decodeURIComponent(file.originalname))
             }
         }),
         limits: {
@@ -147,9 +148,9 @@ function initService() {
     // 添加跨域
     serve.all("*", (req, res, next) => {
         // 开发调试时开启
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'content-type');
-        res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+        // res.header('Access-Control-Allow-Origin', '*');
+        // res.header('Access-Control-Allow-Headers', 'content-type');
+        // res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
         if (req.method.toLowerCase() == 'options') res.send(200);
         else next();
     })

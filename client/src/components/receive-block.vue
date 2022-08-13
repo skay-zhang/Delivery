@@ -1,7 +1,7 @@
 <template>
   <el-drawer custom-class="app-drawer" :with-header="false" v-model="drawer" direction="ttb">
     <div>
-      <el-upload v-model:file-list="upload.list" drag multiple :show-file-list="false" :action="upload.url">
+      <el-upload v-model:file-list="upload.list" drag multiple :before-upload="pretreatment" :show-file-list="false" :action="upload.url">
         <el-icon class="el-icon--upload">
           <upload-filled />
         </el-icon>
@@ -44,6 +44,9 @@ export default {
   methods: {
     open() {
       this.drawer = true;
+    },
+    pretreatment(file){
+      return new File([file],encodeURIComponent(file.name));
     },
     buildSize(number) {
       if (number >= 1073741824) return parseFloat(number / 1073741824).toFixed(2) + ' GB'
