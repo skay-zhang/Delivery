@@ -7,7 +7,7 @@
         </el-icon>
         <div>
           <div class="text-small text-gray">端口</div>
-          <div>{{ conf.network.port }}</div>
+          <div>{{ conf.network.http.port }}</div>
         </div>
       </div>
       <div class="top-btn flex align-center" @click="openSetting('security')">
