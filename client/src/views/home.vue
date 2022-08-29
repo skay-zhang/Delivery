@@ -52,8 +52,8 @@ export default {
     };
   },
   methods: {
-    getList() {
-      if (this.loading) return;
+    getList(init) {
+      if (init != true && this.loading) return;
       this.loading = true;
       api.getList().then(res => {
         setTimeout(() => {
@@ -117,7 +117,10 @@ export default {
     let state = localStorage.getItem('app:state');
     if (state) this.state = JSON.parse(state);
     // 加载分享列表
-    if (this.state.share) this.getList();
+    this.loading = true;
+    setTimeout(() => {
+      if (this.state.share) this.getList(true);
+    }, 1000);
   }
 }
 </script>

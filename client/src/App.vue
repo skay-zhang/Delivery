@@ -17,7 +17,7 @@
       </el-config-provider>
     </el-scrollbar>
     <div class="copyright text-center text-gray text-small full-width">
-      <div>Released under the MIT License. ( v {{ version }} )</div>
+      <div>Released under the MIT License. ( v {{  version  }} )</div>
       <div>Copyright © 2022-present Skay Zhang & Delivery Contributors</div>
     </div>
   </div>
@@ -42,8 +42,12 @@ export default {
         if (res.state) {
           localStorage.setItem('app:state', JSON.stringify(res.data.state));
           this.version = res.data.version;
-        } else localStorage.setItem('app:state', '{"share":false,"receive":false}');
-        this.$router.push('/home');
+          if (res.data.state.auth && !Boolean(localStorage.getItem("app:token"))) this.$router.push('/auth');
+          else this.$router.push('/home');
+        } else {
+          localStorage.setItem('app:state', '{"auth":true,"share":false,"receive":false}');
+          this.$router.push('/auth');
+        }
         setTimeout(() => {
           this.loading = false;
         }, 500);

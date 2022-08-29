@@ -5,12 +5,13 @@
         <el-progress v-if="item.progress" class="file-progress" :stroke-width="4" :width="60"
           :status="item.progress == 100 ? 'success' : 'warning'" type="circle" :percentage="item.progress">
           <template #default="{ percentage }">
-            <span class="text-small">{{ percentage }}%</span>
+            <span class="text-small">{{  percentage  }}%</span>
           </template>
         </el-progress>
         <img class="file-icon card" :src="'./img/' + item.icon + '.png'" alt="icon" />
-        <div class="file-title line-1">{{ item.name }}</div>
-        <div class="text-small text-center text-gray">{{ item.size }}</div>
+        <div class="file-title line-1">{{  item.name  }}</div>
+        <div class="file-size text-small text-center text-gray" v-if="item.type === 'folder'">文件夹</div>
+        <div class="file-size text-small text-center text-gray" v-else>{{  item.size  }}</div>
       </div>
     </div>
   </div>
@@ -35,7 +36,13 @@ export default {
         this.$message.warning('正在下载中, 请勿重复操作')
         return;
       }
+      file.progress = '0';
+      if (file.type === 'folder') this.$message.warning('正在打包压缩,请稍后...')
       api.download(file, this.downMonitor).then(res => {
+        if (res.type === 'application/json') {
+          this.$message.error('下载失败')
+          return;
+        }
         if (res.size < 50) {
           let reader = new FileReader();
           reader.readAsText(res, 'utf8');
@@ -103,6 +110,11 @@ export default {
   margin-bottom: 3px;
   line-height: 16px;
   font-size: 14px;
+}
+
+.file-size {
+  line-height: 12px;
+  font-size: 12px
 }
 
 .file-item:hover .file-icon {

@@ -1,7 +1,7 @@
 <template>
   <el-drawer custom-class="app-drawer" :with-header="false" v-model="drawer" direction="ttb">
     <div>
-      <el-upload v-model:file-list="upload.list" drag multiple :before-upload="pretreatment" :show-file-list="false" :action="upload.url">
+      <el-upload v-model:file-list="upload.list" drag multiple :before-upload="pretreatment" :on-success="uploadSuccess" :show-file-list="false" :action="upload.url">
         <el-icon class="el-icon--upload">
           <upload-filled />
         </el-icon>
@@ -58,13 +58,19 @@ export default {
       if (status === 'uploading') return '';
       else if (status === 'success') return 'success';
       else if (status === 'fail') return 'exception';
+    },
+    uploadSuccess(res,file){
+      if(!res.state){
+        this.$message.error(res.message ? res.message:'上传失败');
+        file.status = 'fail';
+      }
     }
   },
   mounted() {
     // 初始化上传地址
     let location = window.location;
     this.upload.url = location.protocol + '//' + location.host + '/api/upload';
-    // this.upload.url = 'http://127.0.0.1:56565/api/upload';
+    // this.upload.url = 'http://127.0.0.1:38950/api/upload';
   }
 };
 </script>

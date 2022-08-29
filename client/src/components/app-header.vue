@@ -12,7 +12,7 @@
           </el-icon>
           <div>发送文件</div>
         </div>
-        <div class="menu-item available flex align-center" @click="$router.push('/auth')">
+        <div class="menu-item available flex align-center" v-if="state.auth" @click="$router.push('/auth')">
           <el-icon size="23px">
             <UserFilled />
           </el-icon>
