@@ -21,6 +21,19 @@
   --app-menu-hover-color: #3d3d3d;
   --app-menu-active-border-color: #235db9;
   --app-topbar-btn-hover-color: #494949;
+
+  --el-color-primary: #235db9;
+
+  --el-disabled-bg-color: #3d3d3d;
+  --el-disabled-border-color: #4e5052;
+
+  --el-fill-color-blank: #3d3d3d;
+  --el-input-border-color: #4e5052;
+  --el-text-color-regular: #f4f4f4;
+  --el-border-color-hover: #747474;
+  
+  --el-fill-color-light: #242424;
+  --el-border-color: #4e5052;
 }
 
 @media (prefers-color-scheme: light) {
@@ -37,6 +50,19 @@
     --app-menu-active-border-color: #1968e5;
     --app-topbar-btn-hover-color: #e6e9ed;
     --app-topbar-btn-active-color: #d9dde2;
+
+    --el-color-primary: #1968e5;
+
+    --el-disabled-bg-color: #e6e9ed;
+    --el-disabled-border-color: #c4c6c7;
+  
+    --el-fill-color-blank: #e6e9ed;
+    --el-input-border-color: #c4c6c7;
+    --el-text-color-regular: #213547;
+    --el-border-color-hover: #747474;
+    
+    --el-fill-color-light: #ffffff;
+    --el-border-color: #c4c6c7;
   }
 }
 

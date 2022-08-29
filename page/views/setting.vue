@@ -17,12 +17,12 @@
           <div class="flex align-center justify-between mb-10">
             <div class="label">下载速度<span class="ml-5 text-gray">(kb/s)</span></div>
             <el-input-number v-model="conf.service.share.speed" :min="50" :max="1048576" controls-position="right"
-              style="width: 115px" @change="(e) => change('service', e)" disabled />
+              style="width: 115px" @change="(e) => change('service', e)"  />
           </div>
           <div class="flex align-center justify-between">
             <div class="label">访问频率<span class="ml-5 text-gray">(次/s)</span></div>
             <el-input-number v-model="conf.service.share.qps" :min="1" :max="10" controls-position="right"
-              style="width: 80px" @change="(e) => change('service', e)" disabled />
+              style="width: 80px" @change="(e) => change('service', e)"  />
           </div>
         </div>
         <div class="card pa-10 mb-10" v-if="conf.service.share">
