@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron'
+import { app } from 'electron'
 import pkg from '../../package.json'
 import archiver from 'archiver'
 import express from 'express'
@@ -100,7 +100,7 @@ function downFile(file, res) {
   let state = fs.statSync(file.path, { throwIfNoEntry: false })
   if (state === undefined) return err;
   if (file.type === 'folder') {
-    state = fs.statSync(file.path + '.zip', { throwIfNoEntry: false })
+    state = fs.statSync(file.path + '.zip', { throwIfNoEntry: false });
     if (state === undefined) {
       let output = fs.createWriteStream(file.path + '.zip');
       let archive = archiver('zip', {
@@ -118,7 +118,6 @@ function downFile(file, res) {
         else res.download(file.path + '.zip')
       });
     } else res.download(file.path + '.zip')
-    err = false
   } else {
     console.log('Download File ' + file.path)
     res.download(file.path)
@@ -149,9 +148,9 @@ function initService() {
   // 添加跨域
   serve.all("*", (req, res, next) => {
     // 开发调试时开启
-    // res.header('Access-Control-Allow-Origin', '*');
-    // res.header('Access-Control-Allow-Headers', 'content-type');
-    // res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'content-type');
+    res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
     if (req.method.toLowerCase() == 'options') res.send(200);
     else next();
   })
@@ -159,6 +158,7 @@ function initService() {
   serve.get('/api/init', (_req, res) => {
     conf = getConfig();
     let state = {
+      auth: conf.security.auth.enable,
       share: conf.service.share.enable,
       receive: conf.service.receive.enable
     }
@@ -198,6 +198,15 @@ function initService() {
     }
   });
   // 上传文件
+  serve.use('/api/upload', function (req, res, next) {
+    if (conf.service && conf.service.receive && conf.service.receive.enable) {
+      let fileSize = req.headers['content-length'];
+      let maxSize = conf.service.receive.maxSize;
+      if (maxSize * 1024 * 1024 > fileSize) next();
+      else returnError('File cannot be greater than ' + maxSize + 'MB', res);
+    }
+    else returnError('Upload service is not enabled', res);
+  })
   serve.post('/api/upload', upload.single('file'), (req, res) => {
     if (req.file) {
       let data = {

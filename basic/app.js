@@ -106,6 +106,11 @@ ipcMain.on('get-download', (event, _arg) => {
   event.returnValue = app.getPath('downloads');
 })
 
+// 获取HTTP信息
+ipcMain.on('http-info', (event, _arg) => {
+  event.returnValue = httpService.getInfo();
+})
+
 // 重启Http服务
 ipcMain.on('http-restart', (_event, _arg) => {
   httpService.stop();

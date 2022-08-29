@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, clipboard } from 'electron'
 import os from 'os';
 
 export const win = {
@@ -97,5 +97,14 @@ export const sys = {
         else if (type === 'Windows_NT') return 'windows';
         else if (type === 'Linux') return 'linux';
         return 'other'
+    },
+    setCopy(txt) {
+        clipboard.writeText(txt);
+    }
+}
+
+export const http = {
+    getInfo() {
+        return ipcRenderer.sendSync('http-info');
     }
 }

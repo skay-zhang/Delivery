@@ -133,6 +133,10 @@ body {
   float: right;
 }
 
+.mt-5{
+  margin-top: 5px;
+}
+
 .ml-5 {
   margin-left: 5px;
 }
@@ -145,12 +149,20 @@ body {
   margin-bottom: 5px;
 }
 
+.mt-10 {
+  margin-top: 10px;
+}
+
 .mb-10 {
   margin-bottom: 10px;
 }
 
 .pa-10 {
   padding: 10px;
+}
+
+.pb-10 {
+  padding-bottom: 10px;
 }
 
 .pb-0 {
@@ -200,6 +212,7 @@ body {
   border-right: 2px solid var(--app-head-border-color);
   background-color: var(--app-menu-color);
   color: #999999 !important;
+  padding: 0 10px !important;
 }
 
 .el-tabs__item:hover {
@@ -221,6 +234,16 @@ body {
 
 .el-tabs__nav-wrap::after {
   background-color: var(--app-head-border-color) !important;
+}
+
+.el-tabs .el-loading-spinner{
+  top: 40%;
+}
+
+.el-tabs .el-loading-spinner .circular{
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
 }
 
 @keyframes loading-rotate {
