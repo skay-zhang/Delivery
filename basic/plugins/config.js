@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron'
 import { join } from 'path'
 import fs from 'fs'
 
+let timeout;
 let configPath = join(ipcRenderer.sendSync('get-user-data'), 'config.conf');
 
 // 初始化配置
@@ -31,8 +32,14 @@ function initConfig() {
         enable: false,
         list: []
       },
-      blacklist: [],
-      whitelist: []
+      black: {
+        enable: false,
+        list: []
+      },
+      white: {
+        enable: false,
+        list: []
+      }
     },
     logs: {
       enable: false,
@@ -59,7 +66,12 @@ function getData(init) {
 
 // 保存配置数据
 function saveData(data) {
-  fs.writeFileSync(configPath, JSON.stringify(data), 'utf8');
+  let json = JSON.stringify(data);
+  if (timeout) clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    fs.writeFileSync(configPath, json, 'utf8');
+    console.log('Save Config...')
+  }, 1000);
 }
 
 const config = {
@@ -88,6 +100,7 @@ const config = {
     let data = getData();
     data[moduleKey] = value;
     saveData(data);
+    ipcRenderer.send('config-update', {});
   },
   updateItem(moduleKey, itemKey, value) {
     let data = getData();

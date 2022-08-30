@@ -1,4 +1,4 @@
-import { app } from 'electron'
+import { app, ipcMain, Notification } from 'electron'
 import pkg from '../../package.json'
 import archiver from 'archiver'
 import express from 'express'
@@ -11,11 +11,14 @@ import fs from 'fs'
 
 let Server
 let upload;
+let notice;
+let timeout;
+let Callback;
 let conf = {};
 let Sockets = [];
-let Callback;
 let configPath = path.join(app.getPath('userData'), 'config.conf');
 let sharePath = path.join(app.getPath('userData'), 'Share List');
+let receivePath = path.join(app.getPath('downloads'), 'delivery/');
 
 function getConfig() {
   let data = fs.readFileSync(configPath, 'utf-8');
@@ -40,6 +43,15 @@ const httpService = {
       return;
     }
     conf = getConfig();
+
+    ipcMain.on('config-update', () => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        conf = getConfig();
+        console.log('Update Config...')
+      }, 1000);
+    })
+
     Callback = callback;
     httpService.port = conf.network.http.port
     console.log('Service Init On Port ' + httpService.port)
@@ -58,9 +70,13 @@ const httpService = {
   stop: () => {
     console.log('Service Shutdown In Progress')
     console.log('End ' + Sockets.length + ' Connections')
+    // 移除监听
+    ipcMain.removeListener('config-update')
+    // 关闭连接
     Sockets.forEach(function (socket) {
       socket.destroy();
     });
+    // 停止服务
     Server.close(() => {
       console.log('Service Stop')
       httpService.state = true
@@ -138,7 +154,8 @@ function initUpload() {
       }
     }),
     limits: {
-      fileSize: conf.service.receive.maxSize * 1024 * 1024
+      // 预设100G上传限制
+      fileSize: 100 * 1024 * 1024 * 1024
     }
   });
 }
@@ -148,15 +165,14 @@ function initService() {
   // 添加跨域
   serve.all("*", (req, res, next) => {
     // 开发调试时开启
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'content-type');
-    res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+    // res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Headers', 'content-type');
+    // res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
     if (req.method.toLowerCase() == 'options') res.send(200);
     else next();
   })
   // 获取服务状态
   serve.get('/api/init', (_req, res) => {
-    conf = getConfig();
     let state = {
       auth: conf.security.auth.enable,
       share: conf.service.share.enable,
@@ -226,6 +242,19 @@ function initService() {
       res.send({
         state: true, data
       })
+
+      // 发送通知
+      notice = new Notification({
+        title: '接收文件',
+        body: '[' + data.size + '] ' + data.name,
+        silent: true
+      });
+      notice.show();
+      notice.on('click', e => {
+        let body = e.sender.body;
+        util.openFile(receivePath + body.substring(body.indexOf(']') + 2));
+      });
+
     } else returnError('not file', res)
   });
   serve.use(express.static(path.join(__dirname, app.isPackaged ? '../client' : '../../public/client')))

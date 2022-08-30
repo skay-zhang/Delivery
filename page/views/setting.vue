@@ -33,7 +33,7 @@
           <div class="flex align-center justify-between">
             <div class="label">文件大小<span class="ml-5 text-gray">(MB)</span></div>
             <el-input-number v-model="conf.service.receive.maxSize" :min="1" :max="10240" controls-position="right"
-              style="width: 100px" @change="(e) => change('service', e)" disabled />
+              style="width: 100px" @change="(e) => change('service', e)"/>
           </div>
         </div>
       </div>
@@ -97,41 +97,41 @@
             <div class="label">安全认证</div>
             <el-switch v-model="conf.security.auth.enable" @change="(e) => change('security', e)" />
           </div>
-          <div class="flex align-center justify-between mb-10">
+          <div class="flex align-center justify-between">
             <div class="label">用户列表</div>
             <el-button plain size="small">添加</el-button>
           </div>
-          <div class="flex align-center justify-between">
-            <div class="label ml-5">- admin</div>
+          <div class="flex align-center justify-between mt-10" v-for="(item,index) in conf.security.auth.list" :key="index">
+            <div class="label ml-5">- {{item}}</div>
             <el-button plain size="small">删除</el-button>
           </div>
         </div>
-        <div class="card pa-10 mb-10" v-if="conf.security.blacklist">
+        <div class="card pa-10 mb-10" v-if="conf.security.black">
           <div class="flex align-center justify-between mb-10">
             <div class="label">黑名单</div>
-            <el-button plain size="small">添加</el-button>
-          </div>
-          <div class="flex align-center justify-between mb-10">
-            <div class="label ml-5">- 192.168.0.1</div>
-            <el-button plain size="small">删除</el-button>
+            <el-switch v-model="conf.security.black.enable" @change="(e) => change('security', e)" />
           </div>
           <div class="flex align-center justify-between">
-            <div class="label">禁止黑名单访问</div>
-            <el-switch />
+            <div class="label">IP列表</div>
+            <el-button plain size="small">添加</el-button>
+          </div>
+          <div class="flex align-center justify-between mt-10" v-for="(item,index) in conf.security.black.list" :key="index">
+            <div class="label ml-5">- {{item}}</div>
+            <el-button plain size="small">删除</el-button>
           </div>
         </div>
-        <div class="card pa-10 mb-10" v-if="conf.security.whitelist">
+        <div class="card pa-10 mb-10" v-if="conf.security.white">
           <div class="flex align-center justify-between mb-10">
             <div class="label">白名单</div>
-            <el-button plain size="small">添加</el-button>
-          </div>
-          <div class="flex align-center justify-between mb-10">
-            <div class="label ml-5">- 192.168.1.1</div>
-            <el-button plain size="small">删除</el-button>
+            <el-switch v-model="conf.security.white.enable" @change="(e) => change('security', e)" />
           </div>
           <div class="flex align-center justify-between">
-            <div class="label">仅允许白名单访问</div>
-            <el-switch />
+            <div class="label">IP列表</div>
+            <el-button plain size="small">添加</el-button>
+          </div>
+          <div class="flex align-center justify-between mt-10" v-for="(item,index) in conf.security.white.list" :key="index">
+            <div class="label ml-5">- {{item}}</div>
+            <el-button plain size="small">删除</el-button>
           </div>
         </div>
       </div>

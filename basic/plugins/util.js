@@ -1,5 +1,7 @@
+import process from 'child_process'
 import hash from 'object-hash'
 import mime from './mime'
+import os from 'os'
 
 function getOtherIcon(item) {
     let name = item.name.toLowerCase();
@@ -71,6 +73,11 @@ const util = {
             }
         }
         return fmt
+    },
+    openFile(path) {
+        console.log('Open File: ' + path)
+        if(os.platform === 'win32') process.exec(path);
+        else process.exec('open ' + path);
     }
 }
 
